@@ -61,6 +61,10 @@ int back() {
  * 3. else if 쓰지말고 if-continue 조합으로 하자
  * 4. 기타 의견
  */
+ /**
+  * 가독성 문제 때문에 if-continue로 작성했습니다.
+  * if-else로 하셔도 문제 없어요
+  */
 int main() {
     int n, num;
     string cmd;
@@ -72,34 +76,49 @@ int main() {
             cin >> num;
             if (!full()) //덱 라이브러리 사용시엔 필요없음
                 push_front(num);
-        } else if (cmd == "push_back") {
+            continue;
+        }
+        if (cmd == "push_back") {
             cin >> num;
             if (!full()) //덱 라이브러리 사용시엔 필요없음
                 push_back(num);
-        } else if (cmd == "pop_front") {
+            continue;
+        }
+        if (cmd == "pop_front") {
             if (empty()) //런타임 에러 방지
                 cout << -1 << '\n';
             else
                 cout << pop_front() << '\n';
-        } else if (cmd == "pop_back") {
+            continue;
+        }
+        if (cmd == "pop_back") {
             if (empty()) //런타임 에러 방지
                 cout << -1 << '\n';
             else
                 cout << pop_back() << '\n';
-        } else if (cmd == "size") {
+            continue;
+        }
+        if (cmd == "size") {
             cout << size() << '\n';
-        } else if (cmd == "empty") {
+            continue;
+        }
+        if (cmd == "empty") {
             cout << empty() << '\n';
-        } else if (cmd == "front") {
+            continue;
+        }
+        if (cmd == "front") {
             if (empty()) //런타임 에러 방지
                 cout << -1 << '\n';
             else
                 cout << front() << '\n';
-        } else if (cmd == "back") {
+            continue;
+        }
+        if (cmd == "back") {
             if (empty()) //런타임 에러 방지
                 cout << -1 << '\n';
             else
                 cout << back() << '\n';
+            continue;
         }
     }
 }
