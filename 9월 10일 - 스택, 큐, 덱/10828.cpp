@@ -55,20 +55,29 @@ int main() {
             cin >> num;
             if (!full()) //스택 라이브러리 사용시엔 필요없음
                 push(num);
-        } else if (cmd == "pop") {
-            if (empty()) //스택에서 값을 구할 땐 반드시 empty 체크를 해야함 (런타임 에러 방지)
+            continue;
+        }
+        if (cmd == "pop") {
+            if (empty()) //런타임 에러 방지
                 cout << -1 << '\n';
             else
                 cout << pop() << '\n';
-        } else if (cmd == "size")
+            continue;
+        }
+        if (cmd == "size") {
             cout << size() << '\n';
-        else if (cmd == "empty")
+            continue;
+        }
+        if (cmd == "empty") {
             cout << empty() << '\n';
-        else if (cmd == "top") {
-            if (empty()) //스택에서 값을 구할 땐 반드시 empty 체크를 해야함 (런타임 에러 방지)
+            continue;
+        }
+        if (cmd == "top") {
+            if (empty()) //런타임 에러 방지
                 cout << -1 << '\n';
             else
                 cout << top() << '\n';
+            continue;
         }
     }
 }
