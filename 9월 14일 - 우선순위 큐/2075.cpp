@@ -12,16 +12,16 @@ int main() {
     ios::sync_with_stdio(false);
     cin.tie(NULL);
 
-    int N, input;
+    int n, input;
     priority_queue<int, vector<int>, greater<>> pq; //최소 힙
 
-    cin >> N;
-    for (int i = 0; i < N * N; i++) {
+    cin >> n;
+    for (int i = 0; i < n * n; i++) {
         //입력
         cin >> input;
 
         //연산
-        if (pq.size() < N) //큐의 크기가 N보다 작다면 그냥 투입
+        if (pq.size() < n) //큐의 크기가 N보다 작다면 그냥 투입
             pq.push(input);
         else if (pq.top() < input) { //큐의 크기가 N이상 이라면 root 노드보다 input이 클 때만 갱신
             pq.pop();
