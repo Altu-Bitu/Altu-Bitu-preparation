@@ -12,7 +12,7 @@ bool empty() {
 
 //push
 void push(int num) {
-    int idx = heap_vec.size(); //힙의 가장 마지막 데이터의 인덱스
+    int idx = heap_vec.size(); //이번에 push 할 데이터의 인덱스
     heap_vec.push_back(num); //새로운 데이터를 맨 뒤에 삽입
 
     //root = 1에 도달하거나, 더이상 상위노드보다 값이 크지 않다면 반복문 탈출
