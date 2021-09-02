@@ -1,6 +1,5 @@
 #include <iostream>
 #include <vector>
-#include <algorithm>
 
 using namespace std;
 const int MAX_CHANNEL = 1000000;
