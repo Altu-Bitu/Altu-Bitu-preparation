@@ -43,7 +43,7 @@ int main() {
     for (int i = 0; i < MAX_CHANNEL; i++) { //i번 채널에 대해
         int press_cnt = canPress(i); //i번 채널에 가기 위해 버튼을 눌러야 하는 횟수
         if (press_cnt != 0) //0이 아니라면 i번 채널로 이동할 수 있음
-            min_click = min(min_click, abs(n - i) + press_cnt);
+            min_click = min(min_click, abs(n - i) + press_cnt); //i번 채널 이동 후, i번에서 n번까지 + / - 버튼 누른 값과 최솟값 비교
     }
 
     //출력
