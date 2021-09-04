@@ -34,7 +34,6 @@ int main() {
                     if (n == -1) //최솟값 삭제
                         ms.erase(ms.begin());
                     break;
-
             }
         }
 
