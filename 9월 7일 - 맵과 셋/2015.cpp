@@ -5,7 +5,7 @@
 using namespace std;
 typedef long long ll;
 
-/*
+/**
  * S(i,j): i ~ j 까지의 부분합, S[i]: 1(시작인덱스) ~ i 까지의 부분합
  * 부분합 공식: S(i,j) = S[j] - S[i] (단, i < j)
  * 따라서 부분합이 k값이 되는 경우의 수는 S[j] - S[i] = k 가 되는 경우의 수 찾으면 됨 -> 그냥 찾으면 O(n^2) 으로 시간초과
