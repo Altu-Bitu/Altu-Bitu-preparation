@@ -10,9 +10,6 @@ using namespace std;
  */
 
 int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(NULL);
-
     set<string> s;
     string str;
     int n, m, ans = 0;
@@ -21,13 +18,13 @@ int main() {
     cin >> n >> m;
 
     //집합 s에 포함되어 있는 문자열 입력
-    for (int i = 0; i < n; i++) {
+    while (n--) {
         cin >> str;
         s.insert(str);
     }
 
     //검사해야 하는 문자열 입력
-    for (int i = 0; i < m; i++) {
+    while (m--) {
         cin >> str;
         //집합 s에 포함되어 있다면 ans 증가
         if (s.find(str) != s.end()) ans++;
