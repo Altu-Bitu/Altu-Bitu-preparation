@@ -37,7 +37,8 @@ int main() {
             continue;
         //i가 ab의 약수라면
         int tmp_a = i, tmp_b = ab / i;
-        if (calcGCD(tmp_b, tmp_a) == 1) { //두 수가 서로소라면 합이 최소가 되는 a, b
+        //두 수가 서로소인지 체크 -> 만약 두 수가 서로소가 아니라면 두 수의 최대공약수가 gcd가 될 수 없음
+        if (calcGCD(tmp_b, tmp_a) == 1) { 
             a = tmp_a;
             b = tmp_b;
             break;
