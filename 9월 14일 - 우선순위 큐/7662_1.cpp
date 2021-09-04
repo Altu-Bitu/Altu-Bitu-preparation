@@ -15,27 +15,33 @@ int main() {
 
     cin >> t;
     while (t--) {
-        multiset<int> q; //중복 저장
+        multiset<int> ms; //중복 저장
         cin >> k;
         while (k--) {
             //입력
             cin >> cmd >> n;
 
             //연산
-            if (cmd == 'I') //I 연산
-                q.insert(n);
-            else if (!q.empty()) { //D 연산이면서 Q가 비어있지 않을 때
-                if (n == 1) //최댓값 삭제
-                    q.erase(--q.end());
-                else //최솟값 삭제
-                    q.erase(q.begin());
+            switch (cmd) {
+                case 'I': //I 연산
+                    ms.insert(n);
+                    break;
+                case 'D': //D 연산
+                    if (ms.empty()) //ms가 비어있다면 연산 무시
+                        break;
+                    if (n == 1) //최댓값 삭제
+                        ms.erase(--ms.end());
+                    if (n == -1) //최솟값 삭제
+                        ms.erase(ms.begin());
+                    break;
+
             }
         }
 
         //출력
-        if (q.empty())
+        if (ms.empty())
             cout << "EMPTY\n";
         else
-            cout << *(--q.end()) << ' ' << *q.begin() << '\n';
+            cout << *(--ms.end()) << ' ' << *ms.begin() << '\n';
     }
 }
