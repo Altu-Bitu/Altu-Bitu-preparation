@@ -1,57 +1,65 @@
 #include <iostream>
-#include <vector>
+#include <stack>
 
 using namespace std;
 
 /**
- * 1. 한 자릿수씩 더해서 배열에 저장
- * 2. A와 B의 길이가 같지만, 둘의 합의 길이는 다른 경우 고려
- * 3. A와 B의 길이가 다른 경우 고려
+ * 1. 한 자릿수씩 더해서 스택(혹은 배열)에 저장
+ * 2. 한 자릿수씩 더할 때, 값이 10을 넘어가는 경우 고려
+ * 3. A와 B의 길이가 같지만, 둘의 합의 길이는 다른 경우 고려
+ * 4. A와 B의 길이가 다른 경우 고려
  *
- * 다양한 풀이가 있지만, 본 풀이는 3을 고려해 일의 자릿수 값부터 벡터에 저장
+ * 본 풀이에서 더한 결과값을 스택에 넣는 이유는 일의자릿수부터 더하기 때문
+ * 배열을 사용할 경우 마지막 인덱스부터 출력하면 됨
  */
 
-//한 자릿수씩 더하는 함수, 일의 자릿수부터 시작
-vector<int> calcPlus(vector<int> &a, vector<int> &b, int l) {
-    vector<int> result;
-    int plus = 0; //현재 자릿수가 10보다 커서 다음 자릿수로 넘어간 수 저장, 항상 0 또는 1의 값을 지님
-    for (int i = 0; i < l; i++) {
-        int num = plus + a[i] + b[i]; //각 자릿수의 값 + 전 자릿수에서 넘어온 수 더함
-        plus = num / 10; //다음 자릿수로 넘어가서 더해지는 수
-        result.push_back(num % 10); //현재 자릿수 최종 값
-    }
-    if (plus) //마지막 제일 큰 자릿수가 10보다 커서 다음 자릿수까지 넘어갔는지 검사
-        result.push_back(plus);
-    return result;
+//한 자릿수씩 더해서 값 리턴하는 함수
+int digitPlus(string &a, string &b, int p1, int p2, bool carry) {
+    int num = 0;
+    if (p1 >= 0) //p1 인덱스가 0 이상이라면 -> a에 남은 수가 존재한다면
+        num += (a[p1] - '0');
+    if (p2 >= 0) //p2 인덱스가 0 이상이라면 -> b에 남은 수가 존재한다면
+        num += (b[p2] - '0');
+    if (carry) //전 자릿수에서 올림되었다면
+        return num + 1;
+    return num;
 }
 
-//string 으로 받은 입력 수를 벡터에 일의 자릿수 값부터 저장
-vector<int> stringToVec(string str, int l) {
-    vector<int> arr(l, 0); //길이가 l보다 작다면 남은 값엔 0이 들어가도록 초기화
-    for (int i = str.length() - 1; i >= 0; i--) //일의 자릿수 값부터
-        arr[(str.length()-1) - i] = str[i] - '0'; //0번 인덱스부터 해당 자릿수 값을 저장
-    return arr;
+//A + B 함수, 일의 자릿수부터 더함
+stack<int> calcPlus(string &a, string &b) {
+    stack<int> st;
+    int p1 = a.length() - 1; //a의 일의 자릿수 인덱스
+    int p2 = b.length() - 1; //b의 일의 자릿수 인덱스
+    int num = 0;
+
+    while (p1 >= 0 || p2 >= 0) { //자릿수 더하기
+        if (num >= 10) //그 전 자릿수 더하기 값이 10을 넘었다면 올림변수인 carry를 true로 호출
+            num = digitPlus(a, b, p1--, p2--, true);
+        else
+            num = digitPlus(a, b, p1--, p2--, false);
+        st.push(num % 10); //올림값 제외한 한 자릿수만 스택에 저장
+    }
+    if (num >= 10) //마지막 올림 확인
+        st.push(1);
+
+    return st;
 }
 
 int main() {
-    string str_a, str_b; //입력 수의 길이가 매우 기므로 string 으로 입력
-    vector<int> a, b, result; //각 A, B의 각 자릿수에 대한 값 저장, 더한 결과 저장하는 result 배열
+    string a, b; //입력 수가 매우 크므로 string 으로 입력
+    stack<int> st; //더한 결과값 저장할 스택
 
     //입력
-    cin >> str_a >> str_b;
+    cin >> a >> b;
 
     //연산
-    int l = max(str_a.length(), str_b.length()); //둘 중 더 긴 길이 저장 -> 더 긴 길이까지 더해야 하므로
-    //string으로 받은 입력을 각 자릿수 값이 저장되는 벡터로 변환
-    //여기 이렇게 함수화할지 아니면 그냥 메인에서 처리할지 고민중인데 뭐가 좋을까요,,?(튜터용)
-    a = stringToVec(str_a, l);
-    b = stringToVec(str_b, l);
-    //한 자릿수씩 더하는 함수 호출해서 결과값 저장
-    result = calcPlus(a, b, l);
+    st = calcPlus(a, b);
 
     //출력
-    for (int i = result.size() - 1; i >= 0; i--) //일의 자릿수부터 저장되었으므로 마지막 인덱스 값부터 출력
-        cout << result[i];
+    while (!st.empty()) {
+        cout << st.top();
+        st.pop();
+    }
     cout << '\n';
 
     return 0;
