@@ -1,5 +1,4 @@
 #include <iostream>
-#include <vector>
 
 using namespace std;
 
@@ -14,27 +13,21 @@ typedef pair<int, int> ci;
  */
 
 ci diet(int D, int W, int I, int A, int B, int T) {
-    ci result;
     while (D--) {
         int E = B + A; //일일 에너지 소비량
         W += (I - E); //체중변화
 
-        if (W <= 0 || B <= 0) break;
-
-        if (!T) //일일 기초 대사량 고려하는 경우라면 역치값 존재하지 않음
-            continue;
-        if (abs(I - E) > T) {
+        if (T && abs(I - E) > T) { //일일 기초 대사량 고려하는 경우
             if ((I - E) / 2 < 0) B += (I - E - 1) / 2; //c++에서 음수의 소수점은 그냥 버려지므로 내림함수를 만족시키기 위해선 -1을 하고 나누어줘야함
             else B += (I - E) / 2;
         }
+
+        if (W <= 0 || B <= 0) return ci(0, 0); //체중이나 기초대사량이 0 이하라면 출력 후 바로 리턴
     }
-    result.first = W; //최종 체중 저장
-    result.second = B; //최종 일일기초대사량 저장
-    return result;
+    return ci(W, B);
 }
 
 int main() {
-    string ans = "";
     int W0, I0, T, D, I, A;
 
     //입력
@@ -43,14 +36,14 @@ int main() {
 
     //일일 기초 대사량의 변화를 고려하지 않는 경우
     ci result = diet(D, W0, I, A, I0, 0);
-    if (result.first <= 0 || result.second <= 0) { //최종 체중이나 일일 기초대사량 값이 0 이하면 Danger Diet
+    if (!result.first || !result.second) { //최종 체중이나 일일 기초대사량 값이 0 이하면 Danger Diet
         cout << "Danger Diet\n";
     } else {
         cout << result.first << ' ' << result.second << '\n';
     }
     //일일 기초 대사량의 변화를 고려하는 경우
     result = diet(D, W0, I, A, I0, T);
-    if (result.first <= 0 || result.second <= 0) { //최종 체중이나 일일 기초대사량 값이 0 이하면 Danger Diet
+    if (!result.first || !result.second) { //최종 체중이나 일일 기초대사량 값이 0 이하면 Danger Diet
         cout << "Danger Diet\n";
     } else {
         string ans = "NO";
