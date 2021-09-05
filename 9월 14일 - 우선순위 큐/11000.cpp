@@ -20,7 +20,7 @@ struct cmp {
 };
 
 //강의실 배치하는 함수 -> 최소 강의실 수 리턴
-int arrayRoom(int n, vector<ci> lec){
+int arrayRoom(int n, vector<ci> lec) {
     priority_queue<ci, vector<ci>, cmp> pq;
 
     //처음 수업에 무조건 강의실 1개 배치
@@ -29,13 +29,11 @@ int arrayRoom(int n, vector<ci> lec){
 
     //그 다음 수업부터 검사
     for (int i = 1; i < n; i++) {
-        if (lec[i].first >= pq.top().second) { //종료시간이 가장 빠른 수업보다 시작시간이 같거나 느리다면 -> 같은 강의실
+        if (lec[i].first >= pq.top().second) //종료시간이 가장 빠른 수업보다 시작시간이 같거나 느리다면 -> 같은 강의실
             pq.pop();
-            pq.push(lec[i]); //해당 강의실의 정보 갱신
-        } else { //종료시간이 가장 빠른 수업보다 시작시간이 빠르다면 -> 새로운 강의실
+        else //종료시간이 가장 빠른 수업보다 시작시간이 빠르다면 -> 새로운 강의실
             ans++;
-            pq.push(lec[i]); //새로운 강의실 정보 저장
-        }
+        pq.push(lec[i]); //기존 강의실 정보 갱신 or 새로운 강의실 정보 저장
     }
 
     return ans;
