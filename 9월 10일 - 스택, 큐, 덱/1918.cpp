@@ -14,14 +14,11 @@ using namespace std;
  * 7. (!주의!) 주어진 문자열에 대한 검사가 모두 끝나면 스택에 남아있는 연산자를 모두 답에 추가한다.
  */
 
-int main() {
+//중위 표기식->후위표기식 함수
+string infixToPostfix(string &s) {
     stack<char> st;
-    string s, answer = ""; //s: 입력(중위표기식), answer: 후위표기식
+    string answer = ""; //후위표기식
 
-    //입력
-    cin >> s;
-
-    //연산
     for (int i = 0; i < s.length(); i++) {
         switch (s[i]) {
             case '(': //'('일 경우
@@ -62,8 +59,17 @@ int main() {
         st.pop();
     }
 
+    return answer;
+}
+
+int main() {
+    string s; //s: 입력(중위표기식)
+
+    //입력
+    cin >> s;
+
     //출력
-    cout << answer << '\n';
+    cout << infixToPostfix(s) << '\n';
 
     return 0;
 }
