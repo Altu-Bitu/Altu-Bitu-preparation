@@ -21,7 +21,7 @@ int priority(char ch) {
             return 1;
         case '+': case '-': //우선순위 낮음
             return 2;
-        default: //'(' or ')' 인 경우 -> 우선순위 없음 -> 가장 낮게 처리
+        case '(': case ')': //우선순위 없음 -> 가장 낮게 처리
             return 3;
     }
 }
