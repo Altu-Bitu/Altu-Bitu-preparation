@@ -20,34 +20,32 @@ int main() {
     vector<bool> s(SIZE, false);
 
     cin >> m;
-    for (int i = 0; i < m; i++) {
+    while (m--) {
         cin >> cmd;
-        if (cmd == "add") { //num을 true 처리
-            cin >> num;
-            s[num] = true;
-            continue;
-        }
-        if (cmd == "remove") { //num을 false 처리
-            cin >> num;
-            s[num] = false;
-            continue;
-        }
-        if (cmd == "check") { //num의 상태 확인
-            cin >> num;
-            cout << s[num] << '\n';
-            continue;
-        }
-        if (cmd == "toggle") { //true->false, false->true
-            cin >> num;
-            s[num] = !s[num];
-            continue;
-        }
         if (cmd == "all") { //1~20까지 true가 되도록 재할당
             s.assign(SIZE, true);
             continue;
         }
         if (cmd == "empty") { //1~20까지 false가 되도록 재할당
             s.assign(SIZE, false);
+            continue;
+        }
+
+        cin >> num;
+        if (cmd == "add") { //num을 true 처리
+            s[num] = true;
+            continue;
+        }
+        if (cmd == "remove") { //num을 false 처리
+            s[num] = false;
+            continue;
+        }
+        if (cmd == "check") { //num의 상태 확인
+            cout << s[num] << '\n';
+            continue;
+        }
+        if (cmd == "toggle") { //true->false, false->true
+            s[num] = !s[num];
             continue;
         }
     }

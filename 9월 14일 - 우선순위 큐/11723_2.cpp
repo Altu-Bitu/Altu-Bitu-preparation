@@ -26,35 +26,33 @@ int main() {
     int s = 0;
 
     cin >> m;
-    for (int i = 0; i < m; i++) {
+    while (m--) {
         cin >> cmd;
-        if (cmd == "add") { //OR 연산
-            cin >> num;
-            s |= (1 << num);
-            continue;
-        }
-        if (cmd == "remove") { //NOT 연산 후 AND 연산
-            cin >> num;
-            s &= ~(1 << num);
-            continue;
-        }
-        if (cmd == "check") { //AND 연산
-            cin >> num;
-            int tmp = s & (1 << num);
-            cout << ((tmp == 0) ? 0 : 1) << '\n';
-            continue;
-        }
-        if (cmd == "toggle") { //XOR 연산
-            cin >> num;
-            s ^= (1 << num);
-            continue;
-        }
         if (cmd == "all") {
             s = (1 << SIZE) - 1;
             continue;
         }
         if (cmd == "empty") {
             s = 0;
+            continue;
+        }
+
+        cin >> num;
+        if (cmd == "add") { //OR 연산
+            s |= (1 << num);
+            continue;
+        }
+        if (cmd == "remove") { //NOT 연산 후 AND 연산
+            s &= ~(1 << num);
+            continue;
+        }
+        if (cmd == "check") { //AND 연산
+            int tmp = s & (1 << num);
+            cout << ((tmp == 0) ? 0 : 1) << '\n';
+            continue;
+        }
+        if (cmd == "toggle") { //XOR 연산
+            s ^= (1 << num);
             continue;
         }
     }
