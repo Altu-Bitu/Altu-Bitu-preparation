@@ -14,13 +14,13 @@ int main() {
     cin >> n >> m;
 
     //듣도 못한 사람
-    for (int i = 0; i < n; i++) {
+    while (n--) {
         cin >> input;
         never_heard.insert(input);
     }
 
     //보도 못한 사람
-    for (int i = 0; i < m; i++) {
+    while (m--) {
         cin >> input;
         //듣도 못한 사람 명단에도 있다면 듣도 보도 못한 사람
         if (never_heard.find(input) != never_heard.end())
