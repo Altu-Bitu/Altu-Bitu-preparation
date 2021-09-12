@@ -12,22 +12,14 @@ int gcdRecursion(int a, int b) {
 
 int main() {
     string s;
-    int n, m;
 
     //입력
     cin >> s;
 
     //연산(입력으로부터 n, m 추출하기)
-    string temp_s;
-    for (int i = 0; i < s.length(); i++) {
-        if (s[i] == ':') {
-            n = stoi(temp_s); //: 이전의 문자를 숫자로 변경
-            temp_s = "";
-            continue;
-        }
-        temp_s += s[i];
-    }
-    m = stoi(temp_s); //: 이후 문자를 숫자로 변경
+    int index = s.find(':'); //':' 위치 찾기
+    int n = stoi(s.substr(0, index)); //: 이전의 문자를 숫자로 변경
+    int m = stoi(s.substr(index + 1, s.length())); //: 이후 문자를 숫자로 변경
 
     //최대공약수 구하기
     int g = gcdRecursion(max(n, m), min(n, m));
@@ -36,4 +28,4 @@ int main() {
     cout << n / g << ':' << m / g << '\n';
 
     return 0;
-} 
+}
