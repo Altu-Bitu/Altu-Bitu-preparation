@@ -30,7 +30,7 @@ int main() {
 
     //연산
     //g = gcdBad(a, b); //O(n) 함수
-    g = gcdRecursion(min(a,b), max(a,b)); //a > b 가 되도록 함수 호출
+    g = gcdRecursion(max(a, b), min(a, b)); //a > b 가 되도록 함수 호출
     l = (a * b) / g;
 
     //출력
