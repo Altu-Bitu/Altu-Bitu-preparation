@@ -7,7 +7,6 @@ const int SIZE = 100000;
 
 vector<int> prime(SIZE + 1, 0); //소수 경로 저장
 vector<int> exponent(SIZE + 1, 0); //연산 과정에서 각 소수의 지수 저장
-bool check = false; //정수면 true, 유리수면 false
 
 //소수 경로 저장해서 리턴하는 함수
 void isPrime() {
@@ -28,14 +27,19 @@ void isPrime() {
 
 //소인수분해해서 지수 계산하는 함수
 void countExponent(int a, int cnt) {
-    if (a == 0) { //0을 곱함 -> 결과값 0 -> 정수
-        check = true;
-        return;
-    }
     while (a > 1) { //소인수분해, prime[a] = 소인수
         exponent[prime[a]] += cnt; //연산이 곱하기라면 cnt = 1 이여서 지수 증가, 나누기라면 cnt = -1로 지수 감소
         a = a / prime[a];
     }
+}
+
+//연산이 끝난 후, 소인수의 지수에 음수 있는지 판단 -> 있다면 유리수 -> true 리턴
+bool isRationalNumber() {
+    for (int i = 2; i <= SIZE; i++) {
+        if (exponent[i] < 0) //유리수라면
+            return true;
+    }
+    return false;
 }
 
 /**
@@ -61,11 +65,20 @@ int main() {
     cin >> n;
     cin >> a; //처음 수 미리 입력
 
+    if (a == 0) { //처음 수 0 -> 결과 값 0 -> 정수이므로 바로 민트초코 출력 후 종료
+        cout << "mint chocolate\n";
+        return 0;
+    }
     countExponent(abs(a), 1); //처음 수는 곱하기로 계산
 
     //(수식 + 수) 쌍으로 (n-1) 개 입력 + 연산
     for (int i = 1; i < n; i++) {
         cin >> c >> a;
+
+        if (a == 0) { //0을 곱함 -> 결과값 0 -> 정수이므로 바로 민트초코 출력 후 종료
+            cout << "mint chocolate\n";
+            return 0;
+        }
 
         if (c == '*') //곱하기라면 -> 지수 증가
             countExponent(abs(a), 1); //2번째 매개변수: 지수의 증가값
@@ -73,22 +86,10 @@ int main() {
             countExponent(abs(a), -1); //2번째 매개변수: 지수의 감소값
     }
 
-
-    if (check) { //0이 곱해져서 정수인 경우 우선 검사
+    if (isRationalNumber()) //유리수인 경우
+        cout << "toothpaste\n";
+    else //0 제외 정수인 경우
         cout << "mint chocolate\n";
-        return 0;
-    }
-
-    //연산이 끝난 후, 소인수의 지수에 음수 있는지 판단 -> 있다면 유리수
-    for (int i = 2; i <= SIZE; i++) {
-        if (exponent[i] < 0) { //유리수라면
-            cout << "toothpaste\n";
-            return 0;
-        }
-    }
-
-    //0 제외 정수인 경우
-    cout << "mint chocolate\n";
 
     return 0;
 }

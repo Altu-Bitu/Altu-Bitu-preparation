@@ -21,7 +21,7 @@ int main() {
     cin >> n >> k;
 
     //이항계수, C(n,k) 공식과 동일
-    int ans = fac(n) / fac(n - k) / fac(k);
+    int ans = fac(n) / (fac(n - k) * fac(k));
 
     //출력
     cout << ans << '\n';
