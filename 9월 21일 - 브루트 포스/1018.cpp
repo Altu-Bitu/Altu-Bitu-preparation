@@ -3,32 +3,34 @@
 
 using namespace std;
 
+const int SIZE = 64; //체스판 칸 개수
+
 //(row, cal) 에서 시작하는 8 * 8 체스판 만드는 데 드는 최소 카운트 리턴
+//B로 시작하는 체스판을 기준으로 계산한 후, W로 시작하는 체스판을 만드는 최솟값은 64에서 앞의 값을 뺀거라는 걸 활용
 int chessChange(int row, int cal, vector<vector<char>> &board) {
-    int w_cnt = 0; //W로 시작하는 체스판 만들기 위한 카운트
     int b_cnt = 0; //B로 시작하는 체스판 만들기 위한 카운트
 
-    for (int i = 0; i < 8; i++) {
-        for (int j = 0; j < 8; j++) {
-            if ((i + j) % 2 == 0) { //시작 인덱스 (0,0)을 기준으로 행+열 값이 짝수면 시작색과 동일
-                if (board[row + i][cal + j] != 'B')
-                    b_cnt++;
-                else
-                    w_cnt++;
-            } else { //홀수면 시작색과 다른 색
-                if (board[row + i][cal + j] != 'W')
-                    b_cnt++;
-                else
-                    w_cnt++;
-            }
+    for (int i = 0; i < 8; i++) { //행 변화값
+        for (int j = 0; j < 8; j++) { //열 변화값
+            //행 변화값 + 열 변화값이 짝수면 시작색(B)과 동일해야 함 -> 동일하지 않다면 카운트
+            if ((i + j) % 2 == 0 && board[row + i][cal + j] != 'B')
+                b_cnt++;
+            //행 변화값 + 열 변화값이 홀수라면 시작색과 반대색(W)이어야 함 -> 반대색 아니라면 카운트
+            else if ((i + j) % 2 && board[row + i][cal + j] != 'W')
+                b_cnt++;
         }
     }
 
-    return min(w_cnt, b_cnt); //최솟값 리턴
+    //최솟값 리턴
+    if (b_cnt > SIZE / 2)
+        return SIZE - b_cnt;
+    else
+        return b_cnt;
 }
 
 int main() {
-    int n, m, ans = -1;
+    int n, m;
+    int ans = SIZE + 1; //정답은 체스판 칸 개수 + 1로 초기화
 
     //입력
     cin >> n >> m;
@@ -42,8 +44,7 @@ int main() {
     for (int i = 0; i <= n - 8; i++) {
         for (int j = 0; j <= m - 8; j++) {
             int cnt = chessChange(i, j, board); //시작이 (i,j)인 체스판 만드는 최솟값
-            if (ans > cnt || ans == -1) //cnt가 더 작거나 ans에 값 저장이 처음이라면
-                ans = cnt; //최솟값 갱신
+            ans = min(ans, cnt); //최솟값 갱신
         }
     }
 

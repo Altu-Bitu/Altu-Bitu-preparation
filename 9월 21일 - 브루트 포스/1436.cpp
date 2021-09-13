@@ -5,8 +5,8 @@ using namespace std;
 //n번째 종말의 숫자 리턴
 int endNumber(int n) {
     int cnt = 0; //종말의 숫자 카운트
-    //1부터 차례로 모두 검사해보기
-    for (int i = 1;; i++) {
+    //666(1번째 종말의 숫자)부터 차례로 모두 검사해보기
+    for (int i = 666;; i++) {
         string s = to_string(i); //숫자 -> 문자열로 치환
         if (s.find("666") != s.npos) //"666"이 존재한다면
             cnt++;
