@@ -23,15 +23,15 @@ int gcdRecursion(int a, int b) {
 }
 
 int main() {
-    int a, b, g, l;
+    int a, b;
 
     //입력
     cin >> a >> b;
 
     //연산
-    //g = gcdBad(a, b); //O(n) 함수
-    g = gcdRecursion(max(a, b), min(a, b)); //a > b 가 되도록 함수 호출
-    l = (a * b) / g;
+    //int g = gcdBad(a, b); //O(n) 함수
+    int g = gcdRecursion(max(a, b), min(a, b)); //a > b 가 되도록 함수 호출
+    int l = (a * b) / g;
 
     //출력
     cout << g << '\n' << l << '\n';
