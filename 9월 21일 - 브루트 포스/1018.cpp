@@ -5,18 +5,18 @@ using namespace std;
 
 const int SIZE = 64; //체스판 칸 개수
 
-//(row, cal) 에서 시작하는 8 * 8 체스판 만드는 데 드는 최소 카운트 리턴
+//(row, col) 에서 시작하는 8 * 8 체스판 만드는 데 드는 최소 카운트 리턴
 //B로 시작하는 체스판을 기준으로 계산한 후, W로 시작하는 체스판을 만드는 최솟값은 64에서 앞의 값을 뺀거라는 걸 활용
-int chessChange(int row, int cal, vector<vector<char>> &board) {
+int chessChange(int row, int col, vector<vector<char>> &board) {
     int b_cnt = 0; //B로 시작하는 체스판 만들기 위한 카운트
 
     for (int i = 0; i < 8; i++) { //행 변화값
         for (int j = 0; j < 8; j++) { //열 변화값
             //행 변화값 + 열 변화값이 짝수면 시작색(B)과 동일해야 함 -> 동일하지 않다면 카운트
-            if ((i + j) % 2 == 0 && board[row + i][cal + j] != 'B')
+            if ((i + j) % 2 == 0 && board[row + i][col + j] != 'B')
                 b_cnt++;
             //행 변화값 + 열 변화값이 홀수라면 시작색과 반대색(W)이어야 함 -> 반대색 아니라면 카운트
-            else if ((i + j) % 2 && board[row + i][cal + j] != 'W')
+            else if ((i + j) % 2 && board[row + i][col + j] != 'W')
                 b_cnt++;
         }
     }
