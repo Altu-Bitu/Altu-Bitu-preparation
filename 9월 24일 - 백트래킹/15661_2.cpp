@@ -67,5 +67,7 @@ int main() {
     //연산
     for (int i = 1; i < ((1 << n) - 1); i++) //팀을 나누는 모든 경우의 수 ((2^n)-2)개
         min_diff = min(min_diff, splitTeam(n, i));
+
+    //출력
     cout << min_diff;
 }
