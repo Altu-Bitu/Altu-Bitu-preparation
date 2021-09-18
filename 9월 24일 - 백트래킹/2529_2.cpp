@@ -52,7 +52,7 @@ string findMin(vector<int> &arr) {
 }
 
 /**
- * permutation 이용한 순열 풀이
+ * permutation 이용한 순열 풀이 (16ms)
  * next_permutation : 현재의 수열에서 사전 순서상 다음 순열이 있다면, true를 반환하고 해당 수열을 다음 순열로 변경
  * prev_permutation : 현재의 수열에서 사전 순서상 이전 순열이 있다면, true를 반환하고 해당 수열을 이전 순열로 변경
  *
