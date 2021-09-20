@@ -6,7 +6,7 @@ using namespace std;
 
 vector<char> op;
 
-//수열을 문자욜로 바꾸는 함수
+//수열을 문자열로 바꾸는 함수
 string arrToString(vector<int> &arr) {
     string result;
     for (int item:arr)
