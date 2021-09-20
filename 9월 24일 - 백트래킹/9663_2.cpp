@@ -16,7 +16,7 @@ bool promising(int num) {
     return true;
 }
 
-void queens(int cnt) {
+void backtracking(int cnt) {
     if (cnt == n) { //기저 조건
         ans++;
         return;
@@ -24,7 +24,7 @@ void queens(int cnt) {
     for (int i = 0; i < n; i++) {
         check[cnt] = i; //i행 cnt열에 퀸 배치
         if (promising(cnt))
-            queens(cnt + 1);
+            backtracking(cnt + 1);
     }
 }
 
@@ -36,7 +36,7 @@ int main() {
     cin >> n;
 
     //연산
-    queens(0);
+    backtracking(0);
 
     //출력
     cout << ans << '\n';
