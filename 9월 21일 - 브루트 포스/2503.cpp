@@ -2,11 +2,26 @@
 #include <vector>
 
 using namespace std;
+typedef pair<int, int> ci;
 
 struct baseball {
     string num;       //서로 다른 세 자리 수
     int strike, ball; //스트라이크 개수, 볼 개수
 };
+
+ci cntStrikeBall(string &s1, string &s2) {
+    int strike_cnt = 0; //s1과 s2사이의 strike 개수
+    int ball_cnt = 0;   //s1과 s2사이의 ball 개수
+
+    for (int i = 0; i < 3; i++) {
+        if (s1[i] == s2[i]) //위치+수 정확히 일치 -> 스트라이크
+            strike_cnt++;
+        else if (s1.find(s2[i]) != s1.npos) //위치 다른데 수가 존재 -> 볼
+            ball_cnt++;
+    }
+
+    return ci(strike_cnt, ball_cnt);
+}
 
 int game(int n, vector<baseball> &question) {
     int ans = 0; //정답 개수
@@ -22,17 +37,8 @@ int game(int n, vector<baseball> &question) {
 
         for (int j = 0; j < n; j++) {
             string s2 = question[j].num; //질문으로 들어온 수
-            int strike_demo = 0;         //s1과 s2사이의 strike 개수
-            int ball_demo = 0;           //s1과 s2사이의 ball 개수
-
-            for (int k = 0; k < 3; k++) {
-                if (s1[k] == s2[k]) //위치+수 정확히 일치 -> 스트라이크
-                    strike_demo++;
-                if (s1.find(s2[k]) != s1.npos && s1.find(s2[k]) != k) //위치 다른데 수가 존재 -> 볼
-                    ball_demo++;
-            }
-
-            if (strike_demo != question[j].strike || ball_demo != question[j].ball) { //하나라도 다르면
+            ci cnt = cntStrikeBall(s1, s2); //s1과 s2사이의 스트라이크와 볼 개수
+            if (cnt.first != question[j].strike || cnt.second != question[j].ball) { //하나라도 다르면
                 check = false;
                 break;
             }

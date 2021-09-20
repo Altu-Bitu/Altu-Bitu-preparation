@@ -4,10 +4,11 @@ using namespace std;
 
 //기숙사 바닥의 l(높이), w(넓이) 구해서 리턴하는 함수
 pair<int, int> length(int r, int b) {
-    for (int i = r + b; i > 0; i--) { //i = l(높이) 의 값
-        if ((r + b) % i != 0) //w 가 정수가 아니라면 넘어감
+    int area = r + b;
+    for (int i = area; i > 0; i--) { //i = l(높이) 의 값
+        if (area % i != 0) //w 가 정수가 아니라면 넘어감
             continue;
-        int w = (r + b) / i; //총 칸 개수 r + b 이므로 l 인 i를 나눈 값이 w(넓이)
+        int w = area / i; //총 칸 개수 r + b 이므로 l 인 i를 나눈 값이 w(넓이)
         if (r == ((i + w) * 2 - 4)) //테두리 개수가 r 과 같다면
             return make_pair(i, w);
     }
