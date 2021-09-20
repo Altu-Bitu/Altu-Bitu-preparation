@@ -22,8 +22,7 @@ void second(int n, int start, int end) {
     while (cur != start) { //end - 1 부터 start 까지 검사
         cur = minusPosition(n, cur);
         int next = (cur + 1) % (n * 2); //다음 위치
-        if (belt[cur].is_on && !belt[next].is_on &&
-            belt[next].power) { //현재 위치에 로봇이 있고, 다음 위치에 로봇이 없으며 내구성 1이상인 경우 -> 로봇 옮김
+        if (belt[cur].is_on && !belt[next].is_on && belt[next].power) { //현재 위치에 로봇이 있고, 다음 위치에 로봇이 없으며 내구성 1이상인 경우 -> 로봇 옮김
             belt[cur].is_on = false;
             belt[next].power--;
             if (next != end) //내리는 위치 아닐 경우만
