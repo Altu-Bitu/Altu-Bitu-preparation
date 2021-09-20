@@ -15,11 +15,7 @@ bool isCpp(string str) { //c++ 형식인가?
 bool isJava(string str) { //java 형식인가?
     if (isupper(str[0]) || str[0] == '_') //첫글자가 대문자거나 '_'
         return false;
-    for (int i = 1; i < str.size(); i++) {
-        if (str[i] == '_') //'_'가 있으면 안됨
-            return false;
-    }
-    return true;
+    return str.find('_') == string::npos; //'_'가 있으면 안됨
 }
 
 string toCpp(string str) { //java 형식을 c++로
