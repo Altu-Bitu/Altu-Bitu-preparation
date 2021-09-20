@@ -4,7 +4,7 @@
 
 using namespace std;
 
-vector<bool> is_vowel;
+bool is_vowel[26];
 
 //가능성 있는 암호인지 체크하는 함수
 bool promising(int l, vector<char> &alpha, vector<bool> &comb) {
@@ -48,7 +48,6 @@ int main() {
     vector<bool> comb;
 
     //모음 저장
-    is_vowel.assign(26, false);
     is_vowel['a' - 'a'] = is_vowel['e' - 'a'] = is_vowel['i' - 'a'] = is_vowel['o' - 'a'] = is_vowel['u' - 'a'] = true;
 
     //입력
