@@ -9,14 +9,14 @@ const int SIZE = 4000; //양수의 최댓값
 
 int calcMode(vector<int> &frequency) {
     int max_value = 0;  //최빈값의 빈도수
-    for (int i = 0; i <= 8000; i++) { //최빈값의 빈도수 구하기
+    for (int i = 0; i <= SIZE * 2; i++) { //최빈값의 빈도수 구하기
         if (frequency[i] > max_value)
             max_value = frequency[i];
     }
     //두 번째로 작은 최빈값 구하기
     int cnt = 0;  //최빈값 개수
     int mode = 0; //최빈값
-    for (int i = 0; i <= 8000; i++) {
+    for (int i = 0; i <= SIZE * 2; i++) {
         if (frequency[i] == max_value) {
             mode = i - SIZE; //SIZE를 더한 값으로 인덱스에 저장했었으므로 실제 값은 SIZE를 빼주어야 함
             cnt++;
@@ -32,7 +32,7 @@ int calcMode(vector<int> &frequency) {
  * 1. 산술평균 계산 시 실수 자료형으로 맞춰준 후 반올림하는거 주의
  * 2. n은 홀수이므로 중앙값은 항상 (n / 2)번째 인덱스
  * 3. 최빈값은 동일한 빈도수 내에서 두 번째로 '작은' 값임
- * 4. 최빈값이 유일하게 하나만 있는 경우
+ * 4. 최빈값이 유일하게 하나만 있는 경우 고려
  */
 
 int main() {
@@ -59,10 +59,10 @@ int main() {
     sort(num.begin(), num.end());
 
     //출력
-    cout << round(sum / n) << '\n';           //산술평균
-    cout << num[n / 2] << '\n';               //중앙값
-    cout << calcMode(frequency) << '\n';   //최빈값
-    cout << max_value - min_value << '\n';    //범위
+    cout << round(sum / n) << '\n';         //산술평균
+    cout << num[n / 2] << '\n';             //중앙값
+    cout << calcMode(frequency) << '\n';    //최빈값
+    cout << max_value - min_value << '\n';  //범위
 
     return 0;
 }
