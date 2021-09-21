@@ -30,6 +30,7 @@ void backtracking(int cnt) {
 
 /**
  * 4368ms
+ * 해설 : https://myunji.tistory.com/201
  */
 int main() {
     //입력
