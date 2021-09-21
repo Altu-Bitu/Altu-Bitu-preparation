@@ -13,6 +13,8 @@ int ans = INF;
  * !생각해보기! 함수의 각 인자는 각각 어떤 역할을 하고 있나요?
  */
 void backtracking(int n, int start_city, int cur_city, int cnt, int cost) {
+    if (cost >= ans) //생각해보기 : 이 조건문이 없으면 어떻게 될까요?
+        return;
     if (cnt == n) { //종료 조건 : n개의 도시를 순회했음
         //출발 도시로 다시 돌아올 수 있는지 확인
         if (matrix[cur_city][start_city] != 0)
@@ -20,13 +22,11 @@ void backtracking(int n, int start_city, int cur_city, int cnt, int cost) {
         return;
     }
     for (int i = 0; i < n; i++) { //cur_city에서 도시 i로 이동
-        if (!matrix[cur_city][i] || visited[i]) //길이 없거나, 이미 방문한 도시
-            continue;
-        visited[i] = true; //방문 처리
-        int next_cost = cost + matrix[cur_city][i]; //이동 비용
-        if (next_cost < ans) //생각해보기 : 이 조건문이 없으면 어떻게 될까요?
-            backtracking(n, start_city, i, cnt + 1, next_cost);
-        visited[i] = false; //미방문 처리
+        if (matrix[cur_city][i] && !visited[i]) { //길이 있고, 아직 방문하지 않은 도시
+            visited[i] = true; //방문 처리
+            backtracking(n, start_city, i, cnt + 1, cost + matrix[cur_city][i]);
+            visited[i] = false; //미방문 처리
+        }
     }
 }
 

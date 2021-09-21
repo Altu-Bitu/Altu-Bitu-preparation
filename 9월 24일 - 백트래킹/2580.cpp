@@ -81,14 +81,13 @@ void fillSudoku(int idx) {
     if (sudoku[row][col]) //이미 숫자가 채워진 칸이라면 다음 칸으로 넘어감
         return fillSudoku(idx + 1);
     for (int i = 1; i <= MAX; i++) { //1~9까지 넣어보기
-        if (!promising(row, col, i)) //이 칸에 숫자 i를 넣을 수 없음
-            continue;
-
-        sudoku[row][col] = i; //숫자 적기
-        fillSudoku(idx + 1); //다음 칸으로 넘어감
-        if (found) //생각해보기 : 이 부분이 없으면 어떻게 될까요?
-            return;
-        sudoku[row][col] = 0; //숫자 지우기
+        if (promising(row, col, i)) { //이 칸에 숫자 i를 넣을 수 있음
+            sudoku[row][col] = i;
+            fillSudoku(idx + 1);
+            if (found) //생각해보기 : 이 부분이 없으면 어떻게 될까요?
+                return;
+            sudoku[row][col] = 0;
+        }
     }
 }
 
