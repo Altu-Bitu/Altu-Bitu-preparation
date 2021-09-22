@@ -57,7 +57,7 @@ int main() {
     //출력
     cout << round(sum / n) << '\n';                //산술평균
     cout << num[n / 2] << '\n';                    //중앙값
-    cout << calcMode(frequency) << '\n';        //최빈값
+    cout << calcMode(frequency) << '\n';           //최빈값
     cout << num[num.size() - 1] - num[0] << '\n';  //범위
 
     return 0;
