@@ -44,25 +44,21 @@ int main() {
     vector<int> num(n);
     vector<int> frequency(SIZE * 2 + 1, 0); //인덱스는 입력 수 + 4000의 값. 따라서 0 ~ 8000. 각 인덱스에 해당 수가 얼마나 나왔는지 저장
 
-    double sum = 0;                   //평균 구하기 위한 합 변수
-    int max_value = (-1) * SIZE - 1;  //가장 큰 값
-    int min_value = SIZE + 1;         //가장 작은 값
+    double sum = 0; //평균 구하기 위한 합 변수
     for (int i = 0; i < n; i++) {
         cin >> num[i];
         sum += (double) num[i];
         frequency[num[i] + SIZE]++;
-        if (max_value < num[i]) max_value = num[i];
-        if (min_value > num[i]) min_value = num[i];
     }
 
     //연산
     sort(num.begin(), num.end());
 
     //출력
-    cout << round(sum / n) << '\n';         //산술평균
-    cout << num[n / 2] << '\n';             //중앙값
-    cout << calcMode(frequency) << '\n';    //최빈값
-    cout << max_value - min_value << '\n';  //범위
+    cout << round(sum / n) << '\n';                //산술평균
+    cout << num[n / 2] << '\n';                    //중앙값
+    cout << calcMode(frequency) << '\n';        //최빈값
+    cout << num[num.size() - 1] - num[0] << '\n';  //범위
 
     return 0;
 }
