@@ -25,9 +25,9 @@ int calcPower(int arr[], int size) {
 }
 
 void backtracking(int cnt, int st) {
-    if (cnt == n - 1) //n-1이면 팀 더 이상 꾸릴 수 x (기저조건)
+    if (cnt == n) //n이면 팀 더 이상 꾸릴 수 x (기저조건)
         return;
-    if (cnt < n - 1) {
+    if (cnt > 0) { //최소 1명이 팀에 있어야 함
         int idx = 0;
         for (int i = 0; i < n; i++) {
             if (!is_start[i]) //스타트 팀이 아니라면->링크팀
@@ -40,12 +40,14 @@ void backtracking(int cnt, int st) {
         is_start[i] = true; //링크 팀에 속하는 사람 추리기 위해 스타트 팀원 체크
         start[cnt] = i; //스타트 팀에 배치
         backtracking(cnt + 1, i + 1);
+        if (i == 0) //1번 사람이 링크 팀이 됨 -> 어차피 스타트 팀이었던 경우와 값 같음 (왜 그런지 디버깅 해보자!)
+            return;
         is_start[i] = false;
     }
 }
 
 /**
- * [백트래킹 풀이] (160ms)
+ * [백트래킹 풀이] (84ms)
  * 오름차순 수열을 만드는 것을 활용하여 팀 조합
  * 오름차순 수열을 만들어가는 과정에서 길이가 1이상이 되면 팀배정 완료된 것 (최소 1명 이상이 팀원이므로)
  * 스타트 팀을 꾸려가는 것을 기준으로 풀이, 나머지는 링크 팀에 수동배정

@@ -9,9 +9,9 @@ char alpha[20];
 
 void backtracking(int cnt, int start, int vowel_cnt, string password) {
     if (cnt == l) { //암호의 길이만큼 수를 만들면 (기저조건)
-        if (vowel_cnt < 1 || (cnt - vowel_cnt) < 2) //조건(모음 최소 1개, 자음 최소 2걔)에 맞지 않다면 back (가지치기)
-            return;
-        cout << password << '\n';
+        if (vowel_cnt >= 1 && (cnt - vowel_cnt) >= 2) //조건(모음 최소 1개, 자음 최소 2걔)에 맞다면 출력
+            cout << password << '\n';
+        return;
     }
     for (int i = start; i < c; i++) {
         if (is_vowel[alpha[i] - 'a']) //모음이라면
