@@ -13,8 +13,8 @@ int calcPower(vector<int> &arr) {
 
     //모든 Sij의 합
     for (int i = 0; i < size; i++) {
-        for (int j = 0; j < size; j++)
-            result += power[arr[i]][arr[j]];
+        for (int j = i + 1; j < size; j++)
+            result += power[arr[i]][arr[j]] + power[arr[j]][arr[i]];
     }
     return result;
 }
