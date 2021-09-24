@@ -8,7 +8,7 @@ const int SIZE = 10;
 int k;
 bool is_find;
 vector<char> op(SIZE); //부등호
-vector<int> arr(SIZE);
+vector<int> arr(SIZE), num(SIZE);
 vector<bool> check(SIZE);
 
 //수열을 문자열로 바꾸는 함수
@@ -28,8 +28,8 @@ bool promising(int idx) {
     return true;
 }
 
-//최댓값 구하는 백트래킹 함수
-void findMax(int cnt) {
+//최댓값 or 최솟값 구하는 백트래킹 함수 (num배열을 통해 구분)
+void findValue(int cnt) {
     //수가 2개 이상이 배치됐다면, 주어진 부등호 만족하는지 검사, 만족하지 않으면 바로 리턴 (가지치기)
     if (cnt >= 2 && !promising(cnt - 2))
         return;
@@ -37,35 +37,14 @@ void findMax(int cnt) {
         is_find = true;
         return;
     }
-    for (int i = 9; i >= 9 - k; i--) { //최댓값이니 9부터 k개의 수
-        if (!check[i]) {
-            check[i] = true;
-            arr[cnt] = i;
-            findMax(cnt + 1);
+    for (int i = 0; i <= k; i++) { //num[i]: 최댓값이면 9 ~ (9-k), 최솟값이면 0 ~ k
+        if (!check[num[i]]) {
+            check[num[i]] = true;
+            arr[cnt] = num[i];
+            findValue(cnt + 1);
             if (is_find)
                 return;
-            check[i] = false;
-            arr[cnt] = 0;
-        }
-    }
-}
-
-//최솟값 구하는 백트래킹 함수
-void findMin(int cnt) {
-    if (cnt >= 2 && !promising(cnt - 2))
-        return;
-    if (cnt == k + 1) {
-        is_find = true;
-        return;
-    }
-    for (int i = 0; i <= k; i++) {
-        if (!check[i]) {
-            check[i] = true;
-            arr[cnt] = i;
-            findMin(cnt + 1);
-            if (is_find)
-                return;
-            check[i] = false;
+            check[num[i]] = false;
             arr[cnt] = 0;
         }
     }
@@ -87,15 +66,21 @@ int main() {
     }
 
     //연산
-    findMax(0);
+    int idx = 0;
+    for (int i = 9; i >= 9 - k; i--) //num배열에 값 미리 저장
+        num[idx++] = i;
+    findValue(0);
     max_num = arrToString(arr);
 
-    //초기화 !주의! 빼먹기 쉬우니 잘 체크하자
+    //초기화 !주의! 전역변수 사용 시 초기화 빼먹기 쉬우니 잘 체크하자
     is_find = false;
     check.assign(SIZE, false);
     arr.assign(SIZE, 0);
 
-    findMin(0);
+    idx = 0;
+    for (int i = 0; i <= k; i++)
+        num[idx++] = i;
+    findValue(0);
     min_num = arrToString(arr);
 
     //출력
