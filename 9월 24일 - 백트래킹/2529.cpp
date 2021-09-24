@@ -65,10 +65,9 @@ int main() {
         cin >> op[i];
     }
 
-    //연산
-    int idx = 0;
-    for (int i = 9; i >= 9 - k; i--) //num배열에 값 미리 저장
-        num[idx++] = i;
+    //최댓값 연산
+    for (int i = 0; i <= k; i++) //num배열에 값 미리 저장
+        num[i] = 9 - i; //최댓값은 9부터 (9-k)까지 숫자로 이루어짐
     findValue(0);
     max_num = arrToString(arr);
 
@@ -77,9 +76,9 @@ int main() {
     check.assign(SIZE, false);
     arr.assign(SIZE, 0);
 
-    idx = 0;
+    //최솟값 연산
     for (int i = 0; i <= k; i++)
-        num[idx++] = i;
+        num[i] = i; //최솟값은 0부터 k까지 숫자로 이루어짐
     findValue(0);
     min_num = arrToString(arr);
 
