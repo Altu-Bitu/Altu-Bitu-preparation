@@ -5,7 +5,7 @@
 using namespace std;
 
 /**
- * permutation 이용한 조합 풀이 ( ms) (1759_2 주석 참고)
+ * permutation 이용한 조합 풀이 (0ms) (1759_2 주석 참고)
  *
  * 크기가 n인 배열에서 k개의 원소를 뽑는 방법
  *
