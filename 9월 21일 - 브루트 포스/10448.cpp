@@ -9,14 +9,14 @@ vector<int> tri_num(SIZE);
 bool ans_recursion; //재귀함수 풀이 시 사용할 정답
 
 //유레카인지 검사하는 재귀함수
-void eureka(int k, int cnt, int sum) {
+void eurekaRecur(int k, int cnt, int sum) {
     if (cnt == 3) { //정확히 3 개의 삼각수
         if (sum == k) //자연수와 같다면
             ans_recursion = true;
         return;
     }
     for (int i = 1; i <= 45; i++)
-        eureka(k, cnt + 1, sum + tri_num[i]);
+        eurekaRecur(k, cnt + 1, sum + tri_num[i]);
 }
 
 //유레카인지 검사하는 반복문 함수
@@ -65,7 +65,7 @@ int main() {
 
         //재귀함수 풀이
         ans_recursion = false;
-        eureka(k, 0, 0);
+        eurekaRecur(k, 0, 0);
         cout << ans_recursion << '\n';
     }
 
