@@ -17,17 +17,14 @@ pair<int, int> playGame(int m, vector<deque<int>> &deck, vector<deque<int>> &gro
     bool turn = false; //도도부터 시작
 
     while (m--) {
-        //게임 진행 도중 둘 중 한 명의 덱에 있는 카드의 수가 0개가 되는 즉시 게임 종료
-        if (deck[turn].size() <= 1 || deck[!turn].empty()) {
-            if (deck[turn].size() == 1)
-                deck[turn].pop_front();
-            break;
-        }
-
         //이번 턴의 사람이 카드 뒤집어서 그라운드에 올려놓기
         int card = deck[turn].front();
         ground[turn].push_front(card);
         deck[turn].pop_front();
+
+        //게임 진행 도중 둘 중 한 명의 덱에 있는 카드의 수가 0개가 되는 즉시 게임 종료
+        if (deck[turn].empty())
+            break;
 
         //이번에 종을 칠 사람
         int bell = -1;

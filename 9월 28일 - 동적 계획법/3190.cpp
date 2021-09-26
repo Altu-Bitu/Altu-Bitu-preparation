@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <deque>
+#include <map>
 #include <algorithm>
 
 using namespace std;
@@ -12,13 +13,13 @@ ci dir[4] = {{0,  1},  //우
              {1,  0}}; //하
 
 //게임을 진행하는 함수
-int playGame(int n, vector<vector<int>> &board, vector<pair<int, char>> &cmd) {
+int playGame(int n, vector<vector<int>> &board, map<int, char> &cmd) {
     //뱀 초기화
     deque<ci> snake;
     snake.push_front(ci(0, 0));
     board[0][0] = 1;
 
-    int t = 0, cmd_idx = 0, head = 0; //시간, 방향 변환 정보 인덱스, 뱀의 머리 방향
+    int t = 0, head = 0; //시간, 뱀의 머리 방향
     while (true) {
         t++;
         //뱀의 머리가 위치하게될 칸
@@ -39,13 +40,10 @@ int playGame(int n, vector<vector<int>> &board, vector<pair<int, char>> &cmd) {
         board[nr][nc] = 1;
 
         //이번에 방향을 변환하는지 확인
-        if ((cmd_idx < cmd.size()) && (t == cmd[cmd_idx].first)) {
-            if (cmd[cmd_idx].second == 'L') //왼쪽 회전
-                head = (head + 1) % 4;
-            if (cmd[cmd_idx].second == 'D') //오른쪽 회전
-                head = (head + 3) % 4;
-            cmd_idx++;
-        }
+        if (cmd[t] == 'L') //왼쪽 회전
+            head = (head + 1) % 4;
+        if (cmd[t] == 'D') //오른쪽 회전
+            head = (head + 3) % 4;
     }
     return t;
 }
@@ -55,6 +53,8 @@ int playGame(int n, vector<vector<int>> &board, vector<pair<int, char>> &cmd) {
  * 0 2 1
  * 0 0 1
  *
+ * 편의를 위해 문제와 달리 (0, 0)부터 시작
+ *
  * 보드의 상태가 위와 같을 때
  * 뱀의 몸은 (0, 2)~(2, 2)에 걸쳐 있고, 사과는 (1, 1)에 위치하고 있음
  * -> 뱀의 꼬리와 머리 위치를 알기 위해 덱 사용
@@ -63,19 +63,22 @@ int playGame(int n, vector<vector<int>> &board, vector<pair<int, char>> &cmd) {
  * 원활한 방향 변환을 위해 dir 배열 사용
  */
 int main() {
-    int n, k, r, c, l;
+    int n, k, row, col, l, x;
+    char c;
 
     //입력
     cin >> n >> k;
     vector<vector<int>> board(n, vector<int>(n));
     for (int i = 0; i < k; i++) {
-        cin >> r >> c;
-        board[r - 1][c - 1] = 2; //사과 표시
+        cin >> row >> col;
+        board[row - 1][col - 1] = 2; //사과 표시
     }
     cin >> l;
-    vector<pair<int, char>> cmd(l);
-    for (int i = 0; i < l; i++) //회전 정보
-        cin >> cmd[i].first >> cmd[i].second;
+    map<int, char> cmd;
+    for (int i = 0; i < l; i++) { //회전 정보
+        cin >> x >> c;
+        cmd[x] = c;
+    }
 
     //연산 & 출력
     cout << playGame(n, board, cmd);
