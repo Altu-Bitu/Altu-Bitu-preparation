@@ -26,6 +26,7 @@ void backtracking(int cnt) {
 }
 
 /**
+ * [백트래킹 풀이] (184ms)
  * 해설 : https://myunji.tistory.com/309
  */
 int main() {
