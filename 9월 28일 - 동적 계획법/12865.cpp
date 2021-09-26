@@ -13,13 +13,11 @@ vector<info> product;
 int knapsack_2(int n, int k) {
     vector<vector<int>> dp(n + 1, vector<int>(k + 1, 0));
 
-    for (int i = 1; i <= n; i++) { //각 물품에 대해, i: 물품 번호
-        for (int j = 1; j <= k; j++) { //j: 최대 배낭 무게
-            if (j - product[i].w >= 0) //해당 물품 배낭에 넣는게 가능하다면 -> 배낭에 넣는 경우와 안 넣는 경우 중 최댓값 저장
-                dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - product[i].w] + product[i].v);
-            else //불가능하면 무조건 배낭에 안넣는 값 저장 (그 전 물품에 대한 현재 무게의 최댓값)
-                dp[i][j] = dp[i - 1][j];
-        }
+    for (int i = 1; i <= n; i++) { //각 물품에 대해, i: 물품 번호, j: 최대 배낭 무게
+        for (int j = 1; j < product[i].w; j++) //우선 해당 물품을 배낭에 넣을 수 없는 경우
+            dp[i][j] = dp[i - 1][j]; //그 전 물품에 대한 현재 무게의 최댓값 저장
+        for (int j = product[i].w; j <= k; j++) //해당 물품을 배낭에 넣는게 가능한 경우
+            dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - product[i].w] + product[i].v); //배낭에 넣는 경우와 안 넣는 경우 중 최댓값 저장
     }
 
     return dp[n][k];
