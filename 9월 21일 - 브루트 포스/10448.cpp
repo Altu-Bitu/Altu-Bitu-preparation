@@ -21,18 +21,16 @@ void eurekaRecur(int k, int cnt, int sum) {
 
 //유레카인지 검사하는 반복문 함수
 bool eureka(int num) {
-    bool ans = false;   //정답
-
     for (int i = 1; i <= 45; i++) {
         for (int j = 1; j <= 45; j++) {
             for (int k = 1; k <= 45; k++) {
                 if (tri_num[i] + tri_num[j] + tri_num[k] == num)
-                    ans = true;
+                    return true;
             }
         }
     }
 
-    return ans;
+    return false;
 }
 
 /**
@@ -61,12 +59,12 @@ int main() {
         cin >> k;
 
         //반복문 풀이
-        //cout << eureka(k) << '\n';
+        cout << eureka(k) << '\n';
 
         //재귀함수 풀이
-        ans_recursion = false;
-        eurekaRecur(k, 0, 0);
-        cout << ans_recursion << '\n';
+        //ans_recursion = false;
+        //eurekaRecur(k, 0, 0);
+        //cout << ans_recursion << '\n';
     }
 
     return 0;
