@@ -11,10 +11,10 @@ ll divide(int a, int b, int c) {
     //Divide : 제곱 수 나누기
     if (b % 2 == 0) { //b가 짝수일 때
         ll sub_problem = divide(a, b / 2, c);
-        return (sub_problem * sub_problem) % c;
+        return (sub_problem * sub_problem) % c; //Combine : 곱셈 결과 리턴
     }
     //b가 홀수일 때
-    return (a * divide(a, b - 1, c)) % c;
+    return (a * divide(a, b - 1, c)) % c; //Combine : 곱셈 결과 리턴
 }
 
 int main() {
