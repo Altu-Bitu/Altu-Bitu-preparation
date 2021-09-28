@@ -4,7 +4,7 @@
 using namespace std;
 
 int easyStairNum(int n) {
-    vector<vector<int>> dp(n + 1, vector<int>(11, 0));
+    vector<vector<int>> dp(n + 1, vector<int>(12, 0));
     int ans = 0;
 
     //1의 자리 쉬운 계단 수 먼저 초기화.
@@ -32,7 +32,7 @@ int easyStairNum(int n) {
  * ex) 2자리이며 끝나는 수가 3인 쉬운 계단 수 (23, 43)
  * = 1자리고 끝나는 수가 2인 경우(2) + 1자리고 끝나는 수가 4인 경우(4)
  *
- * 0번 인덱스를 포함해서 사용하는데 [현재 인덱스 - 1]에 접근해야 하므로 편의상 1번 인덱스부터 시작 (즉, 실제 수는 인덱스 - 1)
+ * 0번 인덱스를 포함해서 사용하는데 [현재 인덱스 - 1]에 접근해야 하므로 편의상 1번 인덱스부터 시작 (즉, 실제 수는 인덱스-1)
  */
 
 int main() {
