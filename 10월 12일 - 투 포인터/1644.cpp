@@ -75,10 +75,14 @@ int findSum(vector<int> &prime_list, int target) {
 int main() {
     int n;
 
+    //입력
     cin >> n;
 
+    //연산
     vector<bool> is_prime = isPrime(n);
     vector<int> prime_list = primeList(is_prime);
+    int ans = findSum(prime_list, n);
 
-    cout << findSum(prime_list, n);
+    //출력
+    cout << ans;
 }

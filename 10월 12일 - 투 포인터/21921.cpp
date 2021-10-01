@@ -36,7 +36,10 @@ int main() {
     for (int i = 0; i < n; i++)
         cin >> visitor[i];
 
+    //연산
     pair<int, int> ans = maxVisitor(n, x, visitor);
+
+    //출력
     if (ans.first == 0) { //최대 방문자 수가 0명이라면
         cout << "SAD\n";
         return 0;
