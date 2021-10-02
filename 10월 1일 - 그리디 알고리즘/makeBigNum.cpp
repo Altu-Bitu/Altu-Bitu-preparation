@@ -1,42 +1,44 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <deque>
 
 using namespace std;
 
 /**
- * 정답은 (number의 길이 - k)만큼의 길이로 이루어짐
- * 정답의 길이만큼 큰 수를 만들어가는 과정을 생각하자
- * 즉, 정답의 0번 인덱스부터 마지막 인덱스의 값까지 차례로 하나씩 구해나간다
- * 이는 시작 위치 = 0, 끝 위치 = k인 구역부터 시작해서 각각 가장 큰 값을 찾아가는 과정을 (number의 길이 - k)만큼 반복하면 된다
+ * k개의 수를 지워나가면서 바로바로 큰 수를 만들어나가자
+ * 0번 인덱스부터 차례로 검사해서 일단 큰 수에 포함했다가, 커지는 값이 나오면 그 전의 수를 모두 지운다
+ * 마지막으로 남은 수열이 원하는 정답인 큰 수가 된다
+ * ex) 1924 에서 2개를 지워서 큰 수를 만들어야 한다면
+ *     1->9로 넘어가는 순간 1이 지워짐 -> 9는 큰 수에 포함
+ *     2->4로 넘어가는 순간 2가 지워짐 -> 4는 큰 수에 포함
+ *     94가 최종 정답
  *
  * 이러한 그리디적 풀이가 가능한 이유 -> number의 순서가 고정되어 있기 때문!
- * !주의! 구역의 끝 위치는 다음 구역으로 넘어갈 때 꼭 1씩 증가시켜야 함
+ * !주의! 커지는 값이 나와도, 이미 k번 수를 지웠다면 더 이상 지우면 안됨
+ * !주의! 마지막까지 검사했는데 k번 지우지 못했다면 마지막 값들을 지워서 k번을 채움
  */
 
 string solution(string number, int k) {
+    deque<int> dq;
     string answer = "";
-    int l = number.length(); //주어진 number의 길이
-    vector<int> num(l, 0); //큰 수 계산하기 편하게 int형으로 미리 저장하기 위한 배열
-    for (int i = 0; i < l; i++)
-        num[i] = number[i] - '0';
+    int l = number.length();
 
-    //연산
-    int cur_idx = -1; //현재 구역에서 큰 값의 위치
-    int end = k; //현재 검사하는 구역의 끝 위치
-    for (int i = 0; i < l - k; i++) {
-        int start = cur_idx + 1;
-        int cur_max = 0; //구역에서 가장 큰 값
-        for (int j = start; j <= end; j++) {
-            if (cur_max < num[j]) {
-                cur_max = num[j];
-                cur_idx = j;
-            }
+    int cnt = 0;
+    for (int i = 0; i < l; i++) {
+        while (!dq.empty() && dq.front() < number[i] - '0' && cnt < k) { //이번 입력이 dq.front()보다 크면서 아직 K개를 지우지 않았다면
+            dq.pop_front(); //dq.front() 지우기
+            cnt++; //지워진 숫자 증가
         }
-        answer += to_string(cur_max);
-        end++; //다음 구역의 끝 위치
+        dq.push_front(number[i] - '0'); //이번 입력 삽입
     }
+    while (dq.size() > (l - k)) //충분히 지우지 못했다면 앞에서부터(자릿수가 작은 숫자) 지우기
+        dq.pop_front();
 
+    while (!dq.empty()) { //큰 자릿수부터 정답에 추가
+        answer += (dq.back() + '0');
+        dq.pop_back();
+    }
     return answer;
 }
 
