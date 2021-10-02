@@ -5,7 +5,7 @@
 using namespace std;
 
 //k개의 수 지워서 큰 수 만드는 함수
-deque<int> makeBigNum(string number, int l, int k) {
+string makeBigNum(string number, int l, int k) {
     deque<int> dq;
     int cnt = 0;
     for (int i = 0; i < l; i++) {
@@ -18,7 +18,12 @@ deque<int> makeBigNum(string number, int l, int k) {
     while (dq.size() > (l - k)) //충분히 지우지 못했다면 앞에서부터(자릿수가 작은 숫자) 지우기
         dq.pop_front();
 
-    return dq;
+    string answer = "";
+    while (!dq.empty()) { //큰 자릿수부터 정답에 추가
+        answer += (dq.back() + '0');
+        dq.pop_back();
+    }
+    return answer;
 }
 
 /**
@@ -36,14 +41,7 @@ deque<int> makeBigNum(string number, int l, int k) {
  */
 
 string solution(string number, int k) {
-    string answer = "";
-    deque<int> dq = makeBigNum(number, number.length(), k);
-
-    while (!dq.empty()) { //큰 자릿수부터 정답에 추가
-        answer += (dq.back() + '0');
-        dq.pop_back();
-    }
-    return answer;
+    return makeBigNum(number, number.length(), k);
 }
 
 int main() {
