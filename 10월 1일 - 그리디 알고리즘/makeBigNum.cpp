@@ -1,9 +1,25 @@
 #include <iostream>
 #include <string>
-#include <vector>
 #include <deque>
 
 using namespace std;
+
+//k개의 수 지워서 큰 수 만드는 함수
+deque<int> makeBigNum(string number, int l, int k) {
+    deque<int> dq;
+    int cnt = 0;
+    for (int i = 0; i < l; i++) {
+        while (!dq.empty() && dq.front() < number[i] - '0' && cnt < k) { //이번 입력이 dq.front()보다 크면서 아직 K개를 지우지 않았다면
+            dq.pop_front(); //dq.front() 지우기
+            cnt++; //지워진 숫자 증가
+        }
+        dq.push_front(number[i] - '0'); //이번 입력 삽입
+    }
+    while (dq.size() > (l - k)) //충분히 지우지 못했다면 앞에서부터(자릿수가 작은 숫자) 지우기
+        dq.pop_front();
+
+    return dq;
+}
 
 /**
  * k개의 수를 지워나가면서 바로바로 큰 수를 만들어나가자
@@ -20,20 +36,8 @@ using namespace std;
  */
 
 string solution(string number, int k) {
-    deque<int> dq;
     string answer = "";
-    int l = number.length();
-
-    int cnt = 0;
-    for (int i = 0; i < l; i++) {
-        while (!dq.empty() && dq.front() < number[i] - '0' && cnt < k) { //이번 입력이 dq.front()보다 크면서 아직 K개를 지우지 않았다면
-            dq.pop_front(); //dq.front() 지우기
-            cnt++; //지워진 숫자 증가
-        }
-        dq.push_front(number[i] - '0'); //이번 입력 삽입
-    }
-    while (dq.size() > (l - k)) //충분히 지우지 못했다면 앞에서부터(자릿수가 작은 숫자) 지우기
-        dq.pop_front();
+    deque<int> dq = makeBigNum(number, number.length(), k);
 
     while (!dq.empty()) { //큰 자릿수부터 정답에 추가
         answer += (dq.back() + '0');
