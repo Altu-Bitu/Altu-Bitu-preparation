@@ -53,13 +53,10 @@ int main() {
     }
 
     //출력
-    for (int i = 0; i < n / 20 + 1; i++) {
-        for (int j = 1 + 20 * i; j <= 20 * (i + 1); j++) {
-            if (j > n)
-                break;
-            cout << switches[j] << ' ';
-        }
-        cout << '\n';
+    for (int i = 1; i <= n; i++) {
+        cout << switches[i] << ' ';
+        if (i % 20 == 0)
+            cout << '\n';
     }
     return 0;
 }
