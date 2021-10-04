@@ -69,7 +69,7 @@ int main() {
      * 팀을 나누는 모든 경우의 수는 ((2^n)-2)개
      * 하지만, 0011과 1100은 사실상 같은 경우기 때문에 절반만 탐색
      */
-    for (int i = 1; i < ((1 << n) / 2); i++) 
+    for (int i = 1; i < ((1 << n) / 2); i++)
         min_diff = min(min_diff, splitTeam(n, i));
 
     //출력
