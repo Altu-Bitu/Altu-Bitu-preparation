@@ -19,7 +19,7 @@ void running(int &run, int num) {
     for (int i = (4 - num); i < 4; i++) { //홈까지 진루할 수 있는 주자들
         if (run & (1 << i)) { //주자가 있다면
             run &= ~(1 << i); //주자가 홈인 했기 때문에 플레이트를 비워줌
-            score++; //점수 추가
+            score++;
         }
     }
     run = run << num; //주자들 이동
@@ -28,7 +28,7 @@ void running(int &run, int num) {
 //idx 이닝 플레이
 void playGame(int idx) {
     int out = 0, run = 0; //아웃카운트, 진루 상태
-    while (out != 3) { //3아웃 미만일 동안
+    while (out != 3) {
         int hit = board[idx][entry[player]]; //이번 주자의 결과
         if (!hit) //아웃
             out++;
