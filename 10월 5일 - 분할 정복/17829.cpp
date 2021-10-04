@@ -14,8 +14,8 @@ int divide(int row, int col, int size) {
     //Divide : 행렬 4등분 하기
     int next_size = size / 2;
     vector<int> sub_problem;
-    for (int i = 0; i <= next_size; i += size) {
-        for (int j = 0; j <= next_size; j += size)
+    for (int i = 0; i <= next_size; i += next_size) {
+        for (int j = 0; j <= next_size; j += next_size)
             sub_problem.push_back(divide(row + i, col + j, next_size));
     }
 
@@ -42,4 +42,4 @@ int main() {
 
     //연산 & 출력
     cout << divide(0, 0, n);
-}
+} 
