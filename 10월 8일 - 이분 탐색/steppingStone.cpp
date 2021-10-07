@@ -5,16 +5,15 @@ using namespace std;
 
 //cnt명이 건널 때, 건너 뛰어야 하는 디딤돌 칸 수의 최댓값
 int jumpDist(vector<int> &stones, int cnt) {
-    int max_dist = 0, cur_dist = 0;
+    int dist = 1, prev = -1; //건너뛴 칸, 이전에 밟은 디딤돌
     for (int i = 0; i < stones.size(); i++) {
         if (stones[i] >= cnt) { //밟을 수 있음
-            max_dist = max(max_dist, cur_dist);
-            cur_dist = 0;
-        } else if (stones[i] < cnt) //밟을 수 없음
-            cur_dist++;
+            dist = max(dist, i - prev);
+            prev = i;
+        }
     }
-    max_dist = max(max_dist, cur_dist); //개울의 오른쪽 건너편까지 이동
-    return max_dist;
+    dist = max(dist, (int) stones.size() - prev); //개울의 오른쪽 건너편까지 이동
+    return dist;
 }
 
 int upperSearch(vector<int> &stones, int left, int right, int target) {
@@ -24,10 +23,10 @@ int upperSearch(vector<int> &stones, int left, int right, int target) {
         int mid = (left + right) / 2;
         int jump = jumpDist(stones, mid);
 
-        if (jump < target) {
+        if (jump <= target) {
             ans = mid;
             left = mid + 1;
-        } else if (jump >= target)
+        } else if (jump > target)
             right = mid - 1;
     }
     return ans;
