@@ -44,7 +44,7 @@ int upperBound(int left, int right, int target) {
     /**
      * right + 1을 리턴하는 이유
      * break 직전 left와 right는 같은 곳을 가리킴
-     * 이 상태에서 right가 가리키는 값은 target 이하기 때문에 left 포인터가 이동하고 break
+     * 이 상태에서 right(mid)가 가리키는 값은 target 이하기 때문에 left 포인터가 이동하고 break
      * 이 때의 left 값은 target을 처음으로 초과하는 upper bound이며 직전에 left와 right의 위치가 같았으므로 right + 1 == left
      */
     return right + 1; //처음으로 target을 초과하는 수가 등장하는 위치
