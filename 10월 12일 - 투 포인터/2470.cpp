@@ -22,7 +22,7 @@ pair<int, int> liquid(int left, int right) {
         }
         if (mix > 0) //0보다 크면 더 작은 값을 만들어야 함
             right--;
-        if (mix < 0) //0보다 작으면 더 큰 값을 만들어야 함
+        else if (mix < 0) //0보다 작으면 더 큰 값을 만들어야 함
             left++;
     }
     return ans;
