@@ -4,8 +4,8 @@
 
 using namespace std;
 
-long long childNum(vector<int> &snacks, int len) {
-    long long cnt = 0; //몇 명에게 나누어주는지
+int childNum(vector<int> &snacks, int len) {
+    int cnt = 0; //몇 명에게 나누어주는지
     for (int i = snacks.size() - 1; i >= 0; i--) { //가장 긴 과자부터 검사
         if (snacks[i] < len) //나누어주려는 길이보다 작아지면 더 이상 못 나눠줌
             break;
@@ -39,9 +39,7 @@ int upperSearch(vector<int> &snacks, int left, int right, int target) {
  * left: 과자 길이의 최솟값 -> 1
  * right: 과자 길이의 최댓값
  *
- * 과자를 몇 명에게 나누어줄 수 있는지 차례로 검사하기 위해 정렬을 먼저 해주면 좋음
- * !주의! 과자의 수가 1,000,000인데 길이가 모두 1,000,000,000인 경우 총 10^15명에게 과자를 나누어 줄 수 있으므로
- * 탐색 과정에서 몇 명에게 나누어 줄 지 계산할 때 long long 범위를 써야 함
+ * 과자를 몇 명에게 나누어줄 수 있는지 차례로 검사하다 나누어줄 수 없으면 빠져나오기 위해 정렬을 먼저 해주면 좋음
  */
 
 int main() {
