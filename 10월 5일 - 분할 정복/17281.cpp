@@ -13,7 +13,7 @@ int calcScore() {
     int score = 0; //총 점수
     int idx = 1; //타순 저장된 order 인덱스 번호
     for (int i = 0; i < n; i++) { //i: 이닝
-        vector<int> baseman(4, 0); //각 루수마다 선수 몇 명 있는지
+        vector<bool> baseman(4, 0); //각 루수마다 선수가 있는지
         int out = 0; //아웃 선수 카운트
         while (out < 3) {
             int state = innings[i][order[idx++]]; //현재 선수의 공격 상태
@@ -24,26 +24,26 @@ int calcScore() {
                     out++;
                     break;
                 case 1: //안타, 1루씩 진루
-                    score += baseman[3]; //3루에 있는 선수들 모두 홈 도착
+                    score += baseman[3]; //3루에 있는 선수있다면 홈 도착
                     for (int i = 3; i > 0; i--)
                         baseman[i] = baseman[i - 1];
                     baseman[1] = 1; //새로운 선수 1루에 도착
                     break;
                 case 2: //2루타, 2루씩 진루
-                    score += baseman[3] + baseman[2]; //3루, 2루에 있는 선수들 모두 홈 도착
+                    score += baseman[3] + baseman[2]; //3루, 2루에 선수 있다면 홈 도착
                     baseman[3] = baseman[1]; //1루 -> 3루 이동
                     baseman[2] = 1; //새로운 선수 2루에 도착
                     baseman[1] = 0; //초기화
                     break;
                 case 3: //3루타, 3루씩 진루
-                    for (int i = 3; i > 0; i--) { //3루, 2루, 1루에 있는 선수들 모두 홈 도착
+                    for (int i = 3; i > 0; i--) { //3루, 2루, 1루에 선수 있다면 홈 도착
                         score += baseman[i];
                         baseman[i] = 0;
                     }
                     baseman[3] = 1; //새로운 선수 3루에 도착
                     break;
                 case 4: //홈런
-                    for (int i = 3; i > 0; i--) { //3루, 2루, 1루에 있는 선수들 모두 홈 도착
+                    for (int i = 3; i > 0; i--) { //3루, 2루, 1루에 선수 있다면 홈 도착
                         score += baseman[i];
                         baseman[i] = 0;
                     }
