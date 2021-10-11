@@ -4,10 +4,8 @@
 
 using namespace std;
 
-vector<int> arr;
-
 //다른 위치에서 시작하여 서로를 향해 가까워지는 투 포인터
-pair<int, int> liquid(int left, int right) {
+pair<int, int> liquid(vector<int> &arr, int left, int right) {
     pair<int, int> ans;
     int min_diff = 2 * 1e9 + 1;
 
@@ -33,13 +31,13 @@ int main() {
 
     //입력
     cin >> n;
-    arr.assign(n, 0);
+    vector<int> arr(n, 0);
     for (int i = 0; i < n; i++)
         cin >> arr[i];
 
     //연산
     sort(arr.begin(), arr.end());
-    pair<int, int> p = liquid(0, n - 1);
+    pair<int, int> p = liquid(arr, 0, n - 1);
 
     //출력
     cout << p.first << ' ' << p.second;

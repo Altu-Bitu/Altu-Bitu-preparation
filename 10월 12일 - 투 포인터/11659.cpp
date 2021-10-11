@@ -17,7 +17,7 @@ int main() {
         sum[i] = sum[i - 1] + num; //첫번째 수부터 i번째 수까지의 누적합
     }
 
-    for (int i = 0; i < m; i++) {
+    while(m--) {
         int s, e;
         cin >> s >> e;
 

@@ -18,10 +18,9 @@ pair<int, int> maxVisitor(int n, int x, vector<int> &visitor) {
         section_visitor -= visitor[i - x]; //이번 윈도우에서 제외되는 값
         section_visitor += visitor[i]; //이번 윈도우에서 추가되는 값
         if (section_visitor > ans) { //최대 방문자 수가 갱신된다면
-            cnt = 0;
+            cnt = 1;
             ans = section_visitor;
-        }
-        if (section_visitor == ans) //최대 방문자 수와 같다면
+        } else if (section_visitor == ans) //최대 방문자 수와 같다면
             cnt++;
     }
     return make_pair(ans, cnt);
