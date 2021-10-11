@@ -5,9 +5,7 @@
 using namespace std;
 const int MAX = 100000;
 
-vector<int> arr;
-
-int findLen(int n, int k) {
+int findLen(vector<int> &arr, int n, int k) {
     vector<int> cnt(MAX + 1, 0); //각 원소 등장 횟수
 
     int ans = 0, left = 0, right = 0;
@@ -45,10 +43,10 @@ int main() {
 
     //입력
     cin >> n >> k;
-    arr.assign(n, 0);
+    vector<int> arr(n, 0);
     for (int i = 0; i < n; i++)
         cin >> arr[i];
 
     //연산 & 출력
-    cout << findLen(n, k);
+    cout << findLen(arr, n, k);
 }

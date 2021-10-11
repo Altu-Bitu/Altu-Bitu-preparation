@@ -3,7 +3,7 @@
 
 using namespace std;
 
-int steal(int n, int m, int k, vector<int> &house) {
+int steal(vector<int> &house, int n, int m, int k) {
     //윈도우 초기화
     int money = 0;
     for (int i = 0; i < m; i++)
@@ -46,6 +46,6 @@ int main() {
             cin >> house[i];
 
         //연산 & 출력
-        cout << steal(n, m, k, house) << '\n';
+        cout << steal(house, n, m, k) << '\n';
     }
 }

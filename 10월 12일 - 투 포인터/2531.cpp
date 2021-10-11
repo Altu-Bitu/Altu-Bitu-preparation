@@ -3,9 +3,7 @@
 
 using namespace std;
 
-vector<int> belt;
-
-int chooseSushi(int n, int d, int k, int c) {
+int chooseSushi(vector<int> &belt, int n, int d, int k, int c) {
     vector<int> sushi(d + 1, 0);
 
     //쿠폰으로 먹은 초밥
@@ -50,10 +48,10 @@ int main() {
 
     //입력
     cin >> n >> d >> k >> c;
-    belt.assign(n, 0);
+    vector<int> belt(n, 0);
     for (int i = 0; i < n; i++)
         cin >> belt[i];
 
     //연산 & 출력
-    cout << chooseSushi(n, d, k, c);
+    cout << chooseSushi(belt, n, d, k, c);
 }

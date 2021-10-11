@@ -7,11 +7,10 @@ using namespace std;
 typedef long long ll;
 const ll INF = 3 * 1e9 + 1;
 
-vector<ll> arr;
 ll min_diff = INF;
 
 //다른 위치에서 시작하여 서로를 향해 가까워지는 투 포인터
-pair<ll, ll> liquid(ll fixed, int left, int right) {
+pair<ll, ll> liquid(vector<ll> &arr, ll fixed, int left, int right) {
     pair<ll, ll> ans;
     ans = make_pair(INF, INF);
 
@@ -42,13 +41,15 @@ pair<ll, ll> liquid(ll fixed, int left, int right) {
  *
  * pair : 2개의 값 저장
  * tuple : 3개의 값 저장
+ *
+ * !주의! 세 용액의 최댓값은 1e9(=10억)이기 때문에 3개를 섞은 최댓값은 30억이고, int를 넘어감!
  */
 int main() {
     int n;
 
     //입력
     cin >> n;
-    arr.assign(n, 0);
+    vector<ll> arr(n, 0);
     for (int i = 0; i < n; i++)
         cin >> arr[i];
 
@@ -56,7 +57,7 @@ int main() {
     sort(arr.begin(), arr.end());
     tuple<ll, ll, ll> ans;
     for (int i = 0; i < n - 2; i++) {
-        pair<ll, ll> p = liquid(arr[i], i + 1, n - 1); //arr[i] 용액은 고정
+        pair<ll, ll> p = liquid(arr, arr[i], i + 1, n - 1); //arr[i] 용액은 고정
         if ((p.first != INF) && (p.second != INF)) //최솟값이 갱신된 경우
             ans = make_tuple(arr[i], p.first, p.second);
     }
