@@ -40,16 +40,16 @@ void backtracking(int row, int col, int cnt, int sum) {
         return;
     }
 
-    int save = board[row][col];
     for (int i = 0; i < 4; i++) {
         int nr = row + dir[i].first;
         int nc = col + dir[i].second;
 
         if (nr < 0 || nr >= n || nc < 0 || nc >= m || !board[nr][nc]) //범위를 벗어나거나, 이미 방문했다면
             continue;
-        board[row][col] = 0;
-        backtracking(nr, nc, cnt + 1, sum + board[nr][nc]);
-        board[row][col] = save;
+        int save = board[nr][nc];
+        board[nr][nc] = 0;
+        backtracking(nr, nc, cnt + 1, sum + save);
+        board[nr][nc] = save;
     }
 }
 
