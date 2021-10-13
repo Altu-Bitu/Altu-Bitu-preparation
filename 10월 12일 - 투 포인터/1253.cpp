@@ -6,13 +6,15 @@ using namespace std;
 
 //좋은 수인지 검사하는 함수(투 포인터)
 bool isGood(vector<int> &num, int left, int right, int idx) {
-    while (true) {
-        if (left == idx) //left가 현재 수 위치와 같은 경우
+    while (left < right) {
+        if (left == idx) { //left가 현재 수 위치와 같은 경우
             left++;
-        if (right == idx) //right가 현재 수 위치와 같은 경우
+            continue;
+        }
+        if (right == idx) { //right가 현재 수 위치와 같은 경우
             right--;
-        if (left >= right)
-            break;
+            continue;
+        }
 
         if (num[left] + num[right] == num[idx])
             return true;

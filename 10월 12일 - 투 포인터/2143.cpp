@@ -38,7 +38,7 @@ long long cntMakeTarget(vector<int> &sum_a, vector<int> &sum_b, int left, int ri
             ans += cnt_a * cnt_b;
         } else if (sum < target) //T보다 작은 경우
             left++;
-        else //T보다 큰 경우
+        else if (sum > target) //T보다 큰 경우
             right--;
     }
 
