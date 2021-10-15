@@ -3,31 +3,31 @@
 #include <queue>
 
 using namespace std;
-typedef pair<int, int> ci; //x, y좌표 저장하기 위한 pair
+typedef pair<int, int> ci; //row, col 저장하기 위한 pair
 
 int bfs(int n, int m, int cnt, vector<vector<int>> &matrix, queue<ci> q) {
     int dx[4] = {-1, 1, 0, 0};
     int dy[4] = {0, 0, -1, 1};
 
-    int time = 0;
+    int t = 0;
     while (!q.empty()) {
-        int x = q.front().first;
-        int y = q.front().second;
+        int cr = q.front().first;
+        int cc = q.front().second;
         q.pop();
-        time = matrix[x][y]; //현재 탐색까지 걸린 시간
+        t = matrix[cr][cc]; //현재 탐색까지 걸린 시간
         cnt--; //익은 토마토 감소
         for (int i = 0; i < 4; i++) { //상, 하, 좌, 우 방향 탐색 (인접한 노드 탐색)
-            int tx = x + dx[i]; //탐색하려는 임시 노드
-            int ty = y + dy[i]; //탐색하려는 임시 노드
-            if (tx > 0 && tx <= n && ty > 0 && ty <= m && matrix[tx][ty] == 0) { //노드가 존재(행렬 범위 안에 있음)하며, 익지 않은 토마토라면
-                matrix[tx][ty] = matrix[x][y] + 1; //시간 증가값을 토마토 행렬에 저장
-                q.push(ci(tx, ty));
+            int nr = cr + dx[i]; //탐색하려는 임시 노드
+            int nc = cc + dy[i]; //탐색하려는 임시 노드
+            if (nr > 0 && nr <= n && nc > 0 && nc <= m && matrix[nr][nc] == 0) { //노드가 존재(행렬 범위 안에 있음)하며, 익지 않은 토마토라면
+                matrix[nr][nc] = matrix[cr][cc] + 1; //시간 증가값을 토마토 행렬에 저장
+                q.push(ci(nr, nc));
             }
         }
     }
 
     if (!cnt) //모든 토마토 익었다면
-        return time - 1;
+        return t - 1;
     return -1;
 }
 
