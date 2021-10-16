@@ -6,8 +6,8 @@ typedef pair<int, int> ci;
 const int SIZE = 100000;
 
 int bfs(int n, int k) {
-    queue<ci> q; //큐에 좌표값과 시간을 pair로 저장
     vector<bool> visited(SIZE + 1, false);
+    queue<ci> q; //큐에 좌표값과 시간을 pair로 저장
     int ans = 0;
 
     q.push(ci(n, 0)); //시작 노드 초기화
@@ -20,17 +20,13 @@ int bfs(int n, int k) {
             ans = t;
             break;
         }
-        if (!visited[x - 1] && x - 1 >= 0) { //x-1 이동 가능하다면 탐색
-            visited[x - 1] = true;
-            q.push(ci(x - 1, t + 1));
-        }
-        if (!visited[x + 1] && x + 1 <= SIZE) { //x+1 이동 가능하다면 탐색
-            visited[x + 1] = true;
-            q.push(ci(x + 1, t + 1));
-        }
-        if (!visited[x * 2] && x * 2 <= SIZE) { //x*2 이동 가능하다면 탐색
-            visited[x * 2] = true;
-            q.push(ci(x * 2, t + 1));
+
+        vector<int> child = {x - 1, x + 1, x * 2}; //자식 노드
+        for (int i = 0; i < 3; i++) {
+            if (child[i] >= 0 && child[i] <= SIZE && !visited[child[i]]) { //범위 내에 있고, 첫 방문이라면
+                visited[child[i]] = true;
+                q.push(ci(child[i], t + 1));
+            }
         }
     }
     return ans;

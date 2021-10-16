@@ -14,13 +14,13 @@ int h, w;
 
 //dfs 탐색
 void dfs(int cr, int cc) {
+    board[cr][cc] = 0; //방문 체크
+
     for (int i = 0; i < 8; i++) { //가능한 방향의 정점(자식노드) 모두 탐색
         int nr = cr + dx[i];
         int nc = cc + dy[i];
-        if (nr >= 0 && nr < h && nc >= 0 && nc < w && board[nr][nc]) { //탐색하려는 정점이 범위 내에 있고, 땅이라면
-            board[nr][nc] = 0;
+        if (nr >= 0 && nr < h && nc >= 0 && nc < w && board[nr][nc]) //탐색하려는 정점이 범위 내에 있고, 땅이라면
             dfs(nr, nc); //바로 탐색(깊게 탐색)
-        }
     }
 }
 
@@ -29,6 +29,7 @@ void bfs(int row, int col) {
     queue<ci> q;
 
     q.push(ci(row, col));
+    board[row][col] = 0; //처음 위치 방문 체크
 
     while (!q.empty()) {
         int cr = q.front().first; //현재 정점의 행 정보
@@ -68,9 +69,8 @@ int main() {
         int ans = 0;
         for (int i = 0; i < h; i++) {
             for (int j = 0; j < w; j++) {
-                if (board[i][j]) { //섬을 찾았다면 바로 탐색 시작
+                if (board[i][j]) { //땅을 찾았다면 바로 탐색 시작
                     ans++;
-                    board[i][j] = 0; //시작 정점 방문 체크
                     bfs(i, j);
                     //dfs(i, j);
                 }
