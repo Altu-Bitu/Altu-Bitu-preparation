@@ -8,10 +8,10 @@ const int SIZE = 5;
 
 //특정 응시자에 대해 거리두기가 지켜지는지 확인
 bool bfs(vector<string> &place, int row, int col) {
-    int dx[4] = {-1, 1, 0, 0};
-    int dy[4] = {0, 0, -1, 1};
+    int dr[4] = {-1, 1, 0, 0};
+    int dc[4] = {0, 0, -1, 1};
 
-    vector<vector<int>> dist(SIZE, vector<int>(SIZE, 0)); //방문 여부
+    vector<vector<int>> dist(SIZE, vector<int>(SIZE, 0)); //방문 여부, 각 정점까지의 맨허튼 거리
     queue<pair<int, int>> q;
 
     dist[row][col] = 1; //초기값이 0이기 때문에 1로 초기화
@@ -26,8 +26,8 @@ bool bfs(vector<string> &place, int row, int col) {
             continue;
 
         for (int i = 0; i < 4; i++) {
-            int nr = cr + dx[i];
-            int nc = cc + dy[i];
+            int nr = cr + dr[i];
+            int nc = cc + dc[i];
 
             //범위를 벗어나거나, 방문했거나, 파티션이 있음
             if (nr < 0 || nr >= SIZE || nc < 0 || nc >= SIZE || dist[nr][nc] || place[nr][nc] == 'X')
