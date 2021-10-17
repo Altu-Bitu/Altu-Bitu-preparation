@@ -6,8 +6,8 @@ using namespace std;
 typedef pair<int, int> ci;
 
 //상, 하, 좌, 우, 좌상향 대각선, 우상향 대각석, 좌하향 대각선, 우하향 대각선
-int dx[8] = {-1, 1, 0, 0, -1, -1, 1, 1};
-int dy[8] = {0, 0, -1, 1, -1, 1, -1, 1};
+int dr[8] = {-1, 1, 0, 0, -1, -1, 1, 1};
+int dc[8] = {0, 0, -1, 1, -1, 1, -1, 1};
 
 vector<vector<int>> board;
 int h, w;
@@ -17,8 +17,8 @@ void dfs(int cr, int cc) {
     board[cr][cc] = 0; //방문 체크
 
     for (int i = 0; i < 8; i++) { //가능한 방향의 정점(자식노드) 모두 탐색
-        int nr = cr + dx[i];
-        int nc = cc + dy[i];
+        int nr = cr + dr[i];
+        int nc = cc + dc[i];
         if (nr >= 0 && nr < h && nc >= 0 && nc < w && board[nr][nc]) //탐색하려는 정점이 범위 내에 있고, 땅이라면
             dfs(nr, nc); //바로 탐색(깊게 탐색)
     }
@@ -37,8 +37,8 @@ void bfs(int row, int col) {
         q.pop();
 
         for (int i = 0; i < 8; i++) { //가능한 방향의 정점(자식노드) 모두 탐색
-            int nr = cr + dx[i];
-            int nc = cc + dy[i];
+            int nr = cr + dr[i];
+            int nc = cc + dc[i];
             if (nr >= 0 && nr < h && nc >= 0 && nc < w && board[nr][nc]) { //탐색하려는 정점이 범위 내에 있고, 땅이라면
                 board[nr][nc] = 0;
                 q.push(ci(nr, nc));

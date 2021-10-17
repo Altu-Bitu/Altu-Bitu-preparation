@@ -4,8 +4,8 @@
 using namespace std;
 
 //상, 하, 좌, 우
-int dx[4] = {-1, 1, 0, 0};
-int dy[4] = {0, 0, -1, 1};
+int dr[4] = {-1, 1, 0, 0};
+int dc[4] = {0, 0, -1, 1};
 
 vector<vector<int>> board, dp;
 int n, m;
@@ -18,8 +18,8 @@ int dfs(int cr, int cc) {
 
     dp[cr][cc] = 0; //탐색 시작을 위해 0으로 초기화
     for (int i = 0; i < 4; i++) {
-        int nr = cr + dx[i];
-        int nc = cc + dy[i];
+        int nr = cr + dr[i];
+        int nc = cc + dc[i];
         //보드의 범위 안에 있고, 현재 정점의 값보다 작을 경우
         if (nr >= 0 && nr < n && nc >= 0 && nc < m && board[cr][cc] > board[nr][nc])
             dp[cr][cc] += dfs(nr, nc); //다음 정점의 값을 현재 정점에 더함(현재 정점에서 다음 정점 가는게 가능하므로)
