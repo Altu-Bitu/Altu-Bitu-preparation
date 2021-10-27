@@ -9,8 +9,7 @@ void floydWarshall(int n, vector<vector<int>> &graph) {
         for (int j = 1; j <= n; j++) {
             for (int k = 1; k <= n; k++) {
                 int dist = graph[j][i] + graph[i][k]; //중간에 i를 거쳐서 j에서 k로 감
-                if (graph[j][k] > dist) //j->k보다 j->i->k가 더 짧은 경로
-                    graph[j][k] = dist;
+                graph[j][k] = min(graph[j][k], dist); //j->k와 j->i->k 중 더 짧은 경로
             }
         }
     }
