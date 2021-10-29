@@ -10,6 +10,7 @@ int bfs(int n, int k) {
     queue<ci> q; //큐에 좌표값과 시간을 pair로 저장
     int ans = 0;
 
+    visited[n] = true; //시작 노드 방문체크
     q.push(ci(n, 0)); //시작 노드 초기화
     while (!q.empty()) {
         int x = q.front().first; //현재 탐색하려는 위치
