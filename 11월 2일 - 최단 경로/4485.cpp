@@ -46,6 +46,10 @@ int dijkstra(int n, vector<vector<int>> &board) {
     return ans;
 }
 
+/**
+ * 상하좌우로 이동 가능 -> 연결됐다는 것
+ * 시작 지점이 (0, 0)인 다익스트라
+ */
 int main() {
     int n, num = 1;
 

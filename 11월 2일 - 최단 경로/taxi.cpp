@@ -34,10 +34,8 @@ int solution(int n, int s, int a, int b, vector<vector<int>> fares) {
     floydWarshall(graph, n);
 
     for (int i = 1; i <= n; i++) { //i번째 지점까지 합승
-        //i번째 지점까지 합승한 뒤, 각자의 집으로 갈 수 없음
-        if (graph[s][i] == INF || graph[i][a] == INF || graph[i][b] == INF)
-            continue;
         //지금까지의 최단거리와 합승한 최단거리 비교
+        //이동 불가능한 경우(INF)은 min 조건에 의해 자동으로 고려되지 않음
         answer = min(answer, graph[s][i] + graph[i][a] + graph[i][b]);
     }
     return answer;
