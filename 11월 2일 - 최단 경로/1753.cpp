@@ -37,9 +37,6 @@ vector<int> dijkstra(int vertex, int start, vector<vector<ci>> &graph) {
 }
 
 int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(NULL);
-
     int vertex, edge, k, u, v, w;
 
     //입력
