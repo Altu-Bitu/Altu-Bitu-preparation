@@ -3,15 +3,12 @@
 
 using namespace std;
 
-void floydWarshall(int n, vector<vector<bool>> &matrix) {
+void floydWarshall(int n, vector<vector<bool>> &graph) {
     for (int k = 1; k <= n; k++) {
         for (int i = 1; i <= n; i++) {
-            if (!matrix[i][k]) //i->k 전후관계 없는 경우
-                continue;
             for (int j = 1; j <= n; j++) {
-                if (!matrix[k][j]) //k->j 전후관계 없는 경우
-                    continue;
-                matrix[i][j] = true; //중간에 k를 거쳐서 i에서 j로 감. 즉, i->j 전후관계 생김
+                if (graph[i][k] && graph[k][j]) //i->k, k->j 전후관계 있는 경우
+                    graph[i][j] = true;
             }
         }
     }
