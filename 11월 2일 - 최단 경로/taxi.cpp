@@ -18,11 +18,11 @@ vector<vector<int>> fillGraph(int n, vector<vector<int>> &fares) {
 }
 
 void floydWarshall(vector<vector<int>> &graph, int n) {
-    for (int i = 1; i <= n; i++) {
-        for (int j = 1; j <= n; j++) {
-            for (int k = 1; k <= n; k++) {
-                int dist = graph[j][i] + graph[i][k]; //중간에 i를 거쳐서 j에서 k로 감
-                graph[j][k] = min(graph[j][k], dist); //j->k와 j->i->k 중 더 짧은 경로
+    for (int k = 1; k <= n; k++) {
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= n; j++) {
+                int dist = graph[i][k] + graph[k][j]; //중간에 k를 거쳐서 i에서 k로 감
+                graph[i][j] = min(graph[i][j], dist); //i->k와 i->k->j 중 더 짧은 경로
             }
         }
     }
