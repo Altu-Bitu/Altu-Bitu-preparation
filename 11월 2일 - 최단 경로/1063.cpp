@@ -22,7 +22,7 @@ int direction(string move) {
     if (move == "RB") return 7;
 }
 
-void moveKing(string move, ci &point_k, ci &point_r) {
+pair<ci, ci> moveKing(string move, ci point_k, ci point_r) {
     //상, 하, 좌, 우, 우상향, 좌상향, 우하향, 좌하향
     int dr[8] = {-1, 1, 0, 0, -1, -1, 1, 1};
     int dc[8] = {0, 0, -1, 1, 1, -1, 1, -1};
@@ -42,6 +42,7 @@ void moveKing(string move, ci &point_k, ci &point_r) {
             }
         }
     }
+    return {point_k, point_r};
 }
 
 /**
@@ -68,12 +69,13 @@ int main() {
     cin >> king >> rock >> n;
     ci point_k = {king[0] - 'A', king[1] - '1'}; //초기 킹 위치
     ci point_r = {rock[0] - 'A', rock[1] - '1'}; //초기 돌 위치
+    pair<ci, ci> point = {point_k, point_r};
     while (n--) {
         cin >> move;
-        moveKing(move, point_k, point_r);
+        point = moveKing(move, point.first, point.second);
     }
 
     //출력
-    cout << pointToString(point_k) << '\n' << pointToString(point_r) << '\n';
+    cout << pointToString(point.first) << '\n' << pointToString(point.second) << '\n';
     return 0;
 }
