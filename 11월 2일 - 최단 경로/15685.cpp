@@ -58,7 +58,7 @@ int main() {
     vector<vector<bool>> board(SIZE, vector<bool>(SIZE, false)); //100x100 격자
     while (n--) {
         cin >> x >> y >> d >> g;
-        vector<int> direc; //세대의 방향 정보 들어가는 스택
+        vector<int> direc; //세대의 방향 정보 저장 및 보존하는 벡터
         ci end_point = {y + dy[d], x + dx[d]}; //0세대 끝점
         board[y][x] = board[end_point.first][end_point.second] = true; //0세대 시작점, 끝점 초기화
         direc.push_back(d); //0세대 방향 삽입

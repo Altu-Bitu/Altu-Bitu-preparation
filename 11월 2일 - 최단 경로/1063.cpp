@@ -1,8 +1,15 @@
 #include <iostream>
 
 using namespace std;
-typedef pair<string, string> ci;
+typedef pair<int, int> ci;
 const int SIZE = 8;
+
+string pointToString(ci point) {
+    string ans;
+    ans = (point.first + 'A');
+    ans += (point.second + '1');
+    return ans;
+}
 
 int direction(string move) {
     if (move == "L") return 0;
@@ -15,33 +22,26 @@ int direction(string move) {
     if (move == "RB") return 7;
 }
 
-ci moveKing(string move, string king, string rock) {
+void moveKing(string move, ci &point_k, ci &point_r) {
     //상, 하, 좌, 우, 우상향, 좌상향, 우하향, 좌하향
     int dr[8] = {-1, 1, 0, 0, -1, -1, 1, 1};
     int dc[8] = {0, 0, -1, 1, 1, -1, 1, -1};
     int d = direction(move); //방향 인덱스 저장
-    ci ans = {king, rock};
 
-    int rock_r = rock[0] - 'A';
-    int rock_c = rock[1] - '1';
-    int king_nr = (king[0] - 'A') + dr[d];
-    int king_nc = (king[1] - '1') + dc[d];
+    int king_nr = point_k.first + dr[d];
+    int king_nc = point_k.second + dc[d];
     if (king_nr >= 0 && king_nr < SIZE && king_nc >= 0 && king_nc < SIZE) { //킹이 범위 안이라면
-        ans.first = (king_nr + 'A');
-        ans.first += (king_nc + '1');
-        if (king_nr != rock_r || king_nc != rock_c) //돌이 없다면
-            return ans;
-
-        int rock_nr = rock_r + dr[d];
-        int rock_nc = rock_c + dc[d];
-        if (rock_nr >= 0 && rock_nr < SIZE && rock_nc >= 0 && rock_nc < SIZE) {
-            ans.second = (rock_nr + 'A');
-            ans.second += (rock_nc + '1');
-            return ans;
+        if (king_nr != point_r.first || king_nc != point_r.second) //돌이 없다면
+            point_k = {king_nr, king_nc};
+        else { //돌이 있다면
+            int rock_nr = point_r.first + dr[d];
+            int rock_nc = point_r.second + dc[d];
+            if (rock_nr >= 0 && rock_nr < SIZE && rock_nc >= 0 && rock_nc < SIZE) {
+                point_k = {king_nr, king_nc};
+                point_r = {rock_nr, rock_nc};
+            }
         }
-        ans.first = king; //돌이 범위를 넘어가서 다시 원래 자리로 되돌림
     }
-    return ans; //킹과 돌의 마지막 위치 리턴
 }
 
 /**
@@ -66,13 +66,14 @@ int main() {
 
     //입력 & 연산
     cin >> king >> rock >> n;
-    ci ans = {king, rock}; //초기 킹, 돌 위치
+    ci point_k = {king[0] - 'A', king[1] - '1'}; //초기 킹 위치
+    ci point_r = {rock[0] - 'A', rock[1] - '1'}; //초기 돌 위치
     while (n--) {
         cin >> move;
-        ans = moveKing(move, ans.first, ans.second);
+        moveKing(move, point_k, point_r);
     }
 
     //출력
-    cout << ans.first << '\n' << ans.second << '\n';
+    cout << pointToString(point_k) << '\n' << pointToString(point_r) << '\n';
     return 0;
 }
