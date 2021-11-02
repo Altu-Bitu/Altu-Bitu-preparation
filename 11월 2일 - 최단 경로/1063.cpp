@@ -31,15 +31,16 @@ pair<ci, ci> moveKing(string move, ci point_k, ci point_r) {
     int king_nr = point_k.first + dr[d];
     int king_nc = point_k.second + dc[d];
     if (king_nr >= 0 && king_nr < SIZE && king_nc >= 0 && king_nc < SIZE) { //킹이 범위 안이라면
-        if (king_nr != point_r.first || king_nc != point_r.second) //돌이 없다면
+        if (king_nr != point_r.first || king_nc != point_r.second) { //돌이 없다면
             point_k = {king_nr, king_nc};
-        else { //돌이 있다면
-            int rock_nr = point_r.first + dr[d];
-            int rock_nc = point_r.second + dc[d];
-            if (rock_nr >= 0 && rock_nr < SIZE && rock_nc >= 0 && rock_nc < SIZE) {
-                point_k = {king_nr, king_nc};
-                point_r = {rock_nr, rock_nc};
-            }
+            return {point_k, point_r};
+        }
+        //돌이 있다면
+        int rock_nr = point_r.first + dr[d];
+        int rock_nc = point_r.second + dc[d];
+        if (rock_nr >= 0 && rock_nr < SIZE && rock_nc >= 0 && rock_nc < SIZE) {
+            point_k = {king_nr, king_nc};
+            point_r = {rock_nr, rock_nc};
         }
     }
     return {point_k, point_r};
