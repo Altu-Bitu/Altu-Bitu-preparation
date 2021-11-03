@@ -22,18 +22,22 @@ int zeroOneBfs(int n, int k) {
             break;
         }
 
-        vector<int> child = {x * 2, x - 1, x + 1}; //자식 노드
-        for (int i = 0; i < 3; i++) {
-            if (child[i] < 0 || child[i] > SIZE || check[child[i]]) //범위를 벗어나거나 이미 방문
-                continue;
+        int next = x * 2; //순간이동
+        if (next <= SIZE && !check[next]) {
+            check[next] = check[x];
+            dq.push_front(next);
+        }
 
-            check[child[i]] = check[x];
-            if (i == 0) //순간이동
-                dq.push_front(child[i]);
-            else { //걸어서 이동
-                check[child[i]]++;
-                dq.push_back(child[i]);
-            }
+        next = x - 1; //뒤로 걷기
+        if (next >= 0 && !check[next]) {
+            check[next] = check[x] + 1;
+            dq.push_back(next);
+        }
+
+        next = x + 1; //앞으로 걷기
+        if (next <= SIZE && !check[next]) {
+            check[next] = check[x] + 1;
+            dq.push_back(next);
         }
     }
     return ans;

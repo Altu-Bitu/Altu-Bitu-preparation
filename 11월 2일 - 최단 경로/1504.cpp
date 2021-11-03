@@ -42,7 +42,7 @@ vector<int> dijkstra(int vertex, int start, vector<vector<ci>> &graph) {
  *
  * !주의!
  * 1. 한 번 이동했던 정점, 간선을 다시 방문할 수 있음. 즉 1->N의 최댓값이 INF이 아니라 3*INF!
- * 2. 조건에 의하면 E의 값이 0일 수도 있음. 이 경우에선 1->N의 값이 INF이라 경로 없음 조건에 걸리지 않으므로 미리 따로 처리하기
+ * 2. 조건에 의하면 E의 값이 0일 수도 있음. 이 경우에선 1->1->N->N의 값이 INF이라 경로 없음 조건에 걸리지 않으므로 미리 따로 처리하기
  */
 int main() {
     int n, e, a, b, c, v1, v2;
@@ -74,5 +74,5 @@ int main() {
     int ans = min(dist[0][v1] + dist[1][v2] + dist[2][n], dist[0][v2] + dist[2][v1] + dist[1][n]);
 
     //출력
-    cout << ((ans >= 3 * INF) ? -1 : ans);
+    cout << ((ans == 3 * INF) ? -1 : ans);
 }
