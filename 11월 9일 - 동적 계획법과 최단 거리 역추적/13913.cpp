@@ -5,12 +5,11 @@ using namespace std;
 const int SIZE = 100000;
 
 //역추적
-vector<int> back(int n, int k, vector<int> &path) {
+vector<int> back(int x, vector<int> &path) { //x: k(도착지점) 부터 역추적
     vector<int> result(0); //정답 경로
-    result.push_back(k); //도착지점(동생 위치 k)부터 역추적 시작
-    while (k != n) {
-        k = path[k]; //그 다음 값
-        result.push_back(k);
+    while (x != SIZE + 1) {
+        result.push_back(x);
+        x = path[x];
     }
     return result;
 }
@@ -49,7 +48,7 @@ int bfs(int n, int k, vector<int> &path) {
  */
 
 int main() {
-    vector<int> path(SIZE + 1, 0); //경로 저장 벡터
+    vector<int> path(SIZE + 1, SIZE + 1); //경로 저장 벡터
     int n, k;
 
     //입력
@@ -57,7 +56,7 @@ int main() {
 
     //연산
     int ans_t = bfs(n, k, path); //정답 시간
-    vector<int> result = back(n, k, path);
+    vector<int> result = back(k, path);
 
     //출력
     cout << ans_t << '\n';
