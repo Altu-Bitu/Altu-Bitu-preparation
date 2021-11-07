@@ -4,9 +4,7 @@
 using namespace std;
 const int INF = 1e5 * 2; //최대 n-1개의 간선을 지나게 됨
 
-vector<vector<int>> graph, table;
-
-void floydWarshall(int n) {
+void floydWarshall(int n, vector<vector<int>> &graph, vector<vector<int>> &table) {
     for (int k = 1; k <= n; k++) {
         for (int i = 1; i <= n; i++) {
             for (int j = 1; j <= n; j++) {
@@ -36,16 +34,15 @@ int main() {
 
     //입력
     cin >> n >> m;
-    graph.assign(n + 1, vector<int>(n + 1, INF));
-    table.assign(n + 1, vector<int>(n + 1, 0));
+    vector<vector<int>> graph(n+1, vector<int>(n+1, INF));
+    vector<vector<int>> table(n+1, vector<int>(n+1, 0));
     for (int i = 1; i <= n; i++)
         graph[i][i] = 0;
 
     while (m--) { //무방향 그래프
         cin >> s >> d >> c;
         //간선 정보
-        graph[s][d] = c;
-        graph[d][s] = c;
+        graph[s][d] = graph[d][s] = c;
 
         //경로 정보
         table[s][d] = d;
@@ -53,7 +50,7 @@ int main() {
     }
 
     //연산
-    floydWarshall(n);
+    floydWarshall(n, graph, table);
 
     //출력
     for (int i = 1; i <= n; i++) {
