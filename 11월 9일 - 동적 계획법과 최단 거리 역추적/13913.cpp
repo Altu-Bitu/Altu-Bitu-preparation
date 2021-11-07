@@ -7,7 +7,7 @@ const int SIZE = 100000;
 //역추적
 vector<int> back(int x, vector<int> &path) { //x: k(도착지점) 부터 역추적
     vector<int> result(0); //정답 경로
-    while (x != SIZE + 1) {
+    while (x != -1) {
         result.push_back(x);
         x = path[x];
     }
@@ -48,7 +48,7 @@ int bfs(int n, int k, vector<int> &path) {
  */
 
 int main() {
-    vector<int> path(SIZE + 1, SIZE + 1); //경로 저장 벡터
+    vector<int> path(SIZE + 1, -1); //경로 저장 벡터
     int n, k;
 
     //입력
