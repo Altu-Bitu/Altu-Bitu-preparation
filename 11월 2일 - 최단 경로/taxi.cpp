@@ -22,7 +22,7 @@ void floydWarshall(vector<vector<int>> &graph, int n) {
         for (int i = 1; i <= n; i++) {
             for (int j = 1; j <= n; j++) {
                 int dist = graph[i][k] + graph[k][j]; //중간에 k를 거쳐서 i에서 j로 감
-                graph[i][j] = min(graph[i][j], dist); //i->k와 i->k->j 중 더 짧은 경로
+                graph[i][j] = min(graph[i][j], dist); //i->j와 i->k->j 중 더 짧은 경로
             }
         }
     }
