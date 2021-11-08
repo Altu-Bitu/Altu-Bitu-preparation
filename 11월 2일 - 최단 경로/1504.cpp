@@ -4,7 +4,7 @@
 
 using namespace std;
 typedef pair<int, int> ci;
-const int INF = 1e5 * 8; //최대 N-1개의 간선을 지나게 됨
+const int INF = 1e5 * 8 * 3; //최대 N-1개의 간선을 지나게 됨 * 중복 순회 가능(3)
 
 vector<int> dijkstra(int vertex, int start, vector<vector<ci>> &graph) {
     vector<int> dist(vertex + 1, INF);
@@ -41,19 +41,16 @@ vector<int> dijkstra(int vertex, int start, vector<vector<ci>> &graph) {
  * -> 1, v1, v2를 시작점으로 하는 다익스트라 함수 실행하기
  *
  * !주의!
- * 1. 한 번 이동했던 정점, 간선을 다시 방문할 수 있음. 즉 1->N의 최댓값이 INF이 아니라 3*INF!
- * 2. 조건에 의하면 E의 값이 0일 수도 있음. 이 경우에선 1->1->N->N의 값이 INF이라 경로 없음 조건에 걸리지 않으므로 미리 따로 처리하기
+ * 1. 한 번 이동했던 정점, 간선을 다시 방문할 수 있음. 즉 1->N의 최댓값이 INF(1e5*8)이 아니라 3*INF!
+ * 2. 출력에서 (ans == 3*INF)을 하지 않고 INF을 3*INF 값으로 초기화 하는 이유
+ *    조건에 의하면 E의 값이 0일 수도 있음. 이 경우에선 1->1->N->N의 값이 INF이라 경로가 없음에도 3*INF 조건에 걸리지 않음.
+ *    INF을 3*INF으로 초기화하면 해결 가능
  */
 int main() {
     int n, e, a, b, c, v1, v2;
 
     //입력
     cin >> n >> e;
-    //(튜터용) 사실 이렇게 따로 처리하고 싶지 않아서 이것저것 시도해봤는데 다들 코드도 너무 길어지고 이상하더라구요...더 좋은 방법 없을까요?
-    if (e == 0) { //간선이 없는 경우
-        cout << -1;
-        return 0;
-    }
 
     vector<vector<ci>> graph(n + 1, vector<ci>(0));
     vector<vector<int>> dist(3, vector<int>(n + 1, 0));
@@ -74,5 +71,5 @@ int main() {
     int ans = min(dist[0][v1] + dist[1][v2] + dist[2][n], dist[0][v2] + dist[2][v1] + dist[1][n]);
 
     //출력
-    cout << ((ans == 3 * INF) ? -1 : ans);
+    cout << ((ans >= INF) ? -1 : ans);
 }
