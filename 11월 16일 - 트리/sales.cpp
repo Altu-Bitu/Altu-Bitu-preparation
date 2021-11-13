@@ -2,7 +2,6 @@
 #include <vector>
 
 using namespace std;
-const int INF = INT32_MAX;
 
 vector<vector<int>> dp;
 
@@ -17,59 +16,29 @@ int fillDp(vector<int> &sales, vector<vector<int>> &tree, int node, bool flag) {
     if (dp[node][flag] != -1) //이미 탐색했던 상태
         return dp[node][flag];
 
-    if (tree[node].empty())
+    //(튜터용) 이 부분은 맨 마지막에 추가하려구요!
+    if (tree[node].empty()) //말단직원
         return dp[node][flag] = flag ? sales[node - 1] : 0;
+
     dp[node][flag] = 0; //초기화
     bool attend_flag = false; //부하직원 중 한 명이라도 참석했나?
-    int diff = INF;
+    int diff = INT32_MAX;
     for (int i = 0; i < tree[node].size(); i++) {
-        int next_node = tree[node][i];
-        int attend = fillDp(sales, tree, next_node, true);
-        int nonattendance = fillDp(sales, tree, next_node, false);
-        dp[node][flag] += min(attend, nonattendance);
-        if (attend < nonattendance)
+        int next_node = tree[node][i]; //부하직원
+        int attend = fillDp(sales, tree, next_node, true); //참석하는 경우
+        int absent = fillDp(sales, tree, next_node, false); //불참하는 경우
+
+        dp[node][flag] += min(attend, absent); //더 작은 값 더하기
+        //(튜터용) line 33~35도 상대적으로 늦게 추가하겠습니다!
+        if (attend < absent) //부하직원이 한 명이라도 참석한 경우
             attend_flag = true;
-        diff = min(diff, attend - nonattendance);
+        diff = min(diff, attend - absent); //모든 팀원이 불참했을 때를 대비
     }
-    if (flag)
+    if (flag) //팀장 참석
         return dp[node][flag] += sales[node - 1];
-    if (!attend_flag)
-        return dp[node][flag] += diff;
+    if (!attend_flag) //팀장 + 부하직원 모두 불참
+        return dp[node][flag] += diff; //부하직원이 참석한 경우 중 매출 차이가 제일 적었던 경우를 더함
     return dp[node][flag];
-    if (flag) { //node번 직원 참석
-        int cost = 0;
-        for (int i = 0; i < tree[node].size(); i++) {
-            int next_node = tree[node][i]; //부하직원
-
-            //모든 부하직원은 참석해도, 참석하지 않아도 상관없음
-            cost += min(fillDp(sales, tree, next_node, true),
-                        fillDp(sales, tree, next_node, false));
-        }
-        //부하직원의 참석여부에 따른 비용(cost) + 본인의 참석 비용(sales[node-1])
-        return dp[node][flag] = cost + sales[node - 1];
-    }
-    //node번 직원 불참
-    int cost = INF;
-    for (int i = 0; i < tree[node].size(); i++) {
-        int tmp_cost = 0;
-
-        //각 팀에서 1명 이상은 참석해야 하므로 부하직원 중 한 명은 반드시 참석해야 함
-        //j번째 부하직원이 반드시 참여하도록
-        for (int j = 0; j < tree[node].size(); j++) {
-            int next_node = tree[node][j]; //부하직원
-            if (i == j) //반드시 참여해야 하는 직원
-                tmp_cost += fillDp(sales, tree, next_node, true);
-            else //참여여부 상관없는 직원
-                tmp_cost += min(fillDp(sales, tree, next_node, true),
-                                fillDp(sales, tree, next_node, false));
-        }
-        cost = min(cost, tmp_cost); //최솟값 갱신
-    }
-    //cost가 갱신되지 않음 == tree[node].empty() == 부하직원이 없음(말단직원)
-    if (cost == INF)
-        cost = 0;
-    //부하직원의 참석여부에 따른 비용(cost)
-    return dp[node][flag] = cost;
 }
 
 int solution(vector<int> sales, vector<vector<int>> links) {
