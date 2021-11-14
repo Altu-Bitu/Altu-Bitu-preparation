@@ -18,7 +18,7 @@ bool validDir(int r, int c, int d, int stone, vector<vector<int>> &board) {
     bool is_six = promising(r - dr[d], c - dc[d], stone, board);
 
     int cnt = 0;
-    while (promising(r, c, stone, board)) { //(r, c)를 가장 왼쪽으로 하는 이어지는 바둑알의 개수
+    while (cnt < 6 && promising(r, c, stone, board)) { //(r, c)를 가장 왼쪽으로 하는 이어지는 바둑알의 개수
         cnt++;
         r += dr[d];
         c += dc[d];
