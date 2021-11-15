@@ -6,7 +6,7 @@ const int INF = 1e7; //최대 n-1개의 간선을 지나게 됨
 
 //역추적
 vector<int> back(int s, int x, vector<vector<int>> &path) { //x: 도착점부터
-    vector<int> result;
+    vector<int> result(0);
     while (x != 0) {
         result.push_back(x);
         x = path[s][x]; //다음 경로
