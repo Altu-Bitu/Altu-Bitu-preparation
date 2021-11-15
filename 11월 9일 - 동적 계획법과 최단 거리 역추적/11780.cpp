@@ -60,8 +60,8 @@ int main() {
 
     //입력
     cin >> n >> m;
-    vector<vector<int>> graph(n + 1, vector<int>(m + 1, INF));
-    vector<vector<int>> path(n + 1, vector<int>(m + 1, 0));
+    vector<vector<int>> graph(n + 1, vector<int>(n + 1, INF));
+    vector<vector<int>> path(n + 1, vector<int>(n + 1, 0));
     for (int i = 1; i <= n; i++) //자기 자신으로 가는 경로 초기화
         graph[i][i] = 0;
 
