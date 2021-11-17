@@ -4,10 +4,10 @@
 using namespace std;
 
 //단절점, 단절선 파악 함수
-string isTrue(int t, int k, vector<vector<int>> &graph) {
+string isTrue(int t, int k, vector<vector<int>> &tree) {
     if (t == 2)
         return "yes";
-    if (graph[k].size() >= 2)
+    if (tree[k].size() >= 2)
         return "yes";
     return "no";
 }
@@ -25,16 +25,16 @@ int main() {
 
     //입력
     cin >> n;
-    vector<vector<int>> graph(n + 1, vector<int>(0));
+    vector<vector<int>> tree(n + 1, vector<int>(0));
     for (int i = 0; i < n - 1; i++) {
         cin >> a >> b;
-        graph[a].push_back(b);
-        graph[b].push_back(a);
+        tree[a].push_back(b);
+        tree[b].push_back(a);
     }
     cin >> q;
     while (q--) {
         cin >> t >> k;
-        cout << isTrue(t, k, graph) << '\n';
+        cout << isTrue(t, k, tree) << '\n';
     }
     return 0;
 }

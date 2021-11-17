@@ -1,14 +1,11 @@
 #include <iostream>
 #include <vector>
+#include <map>
 
 using namespace std;
 const int INF = 1e4 + 1;
 
-struct binaryTree {
-    int left_child, right_child;
-};
-
-vector<binaryTree> tree;
+map<int, pair<int, int>> tree;
 vector<int> level_left, level_right;
 int width;
 
@@ -30,10 +27,10 @@ void inorder(int node, int level) {
     if (node == -1)
         return;
 
-    inorder(tree[node].left_child, level + 1);
+    inorder(tree[node].first, level + 1);
     level_left[level] = min(level_left[level], width);
     level_right[level] = max(level_right[level], width++);
-    inorder(tree[node].right_child, level + 1);
+    inorder(tree[node].second, level + 1);
 }
 
 //루트 노드 찾는 함수
@@ -44,7 +41,7 @@ int findRoot(int n, vector<int> &node_cnt) {
 }
 
 /**
- * tree: 인덱스를 부모 노드로 해서 왼쪽, 오른쪽 자식노드를 저장
+ * tree: key 값을 부모 노드로 해서 value에 왼쪽, 오른쪽 자식노드를 저장
  * level_left: 레벨을 인덱스로 해당 레벨의 가장 왼쪽 노드의 열 번호 저장
  * level_right: 레벨을 인덱스로 해당 레벨의 가장 오른쪽 노드의 열 번호 저장
  *
@@ -57,7 +54,6 @@ int main() {
 
     //입력
     cin >> n;
-    tree.assign(n + 1, {});
     level_left.assign(n + 1, INF);
     level_right.assign(n + 1, 0);
     vector<int> node_cnt(n + 1, 0); //루트 노드 찾기 위해서 카운트 저장
@@ -68,9 +64,7 @@ int main() {
             node_cnt[l]++;
         if (r != -1)
             node_cnt[r]++;
-
-        tree[p].left_child = l;
-        tree[p].right_child = r;
+        tree[p] = make_pair(l, r);
     }
 
     //연산
