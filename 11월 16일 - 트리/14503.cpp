@@ -27,8 +27,8 @@ int cntCleanRobot(int r, int c, int d, vector<vector<int>> &board) {
                 step++;
                 continue;
             }
-            r = r + dr[d];
-            c = c + dc[d];
+            r += dr[d];
+            c += dc[d];
             step = 0;
         }
     }
