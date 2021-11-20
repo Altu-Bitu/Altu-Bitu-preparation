@@ -7,8 +7,13 @@ typedef pair<int, int> ci;
 vector<bool> visited;
 
 ci findGiga(int node, vector<vector<ci>> &tree) {
+    /**
+     * 기둥만 있는 경우
+     * 이 문제의 테스트 케이스는 정점이 1~n 순서로 입력되기 때문에
+     * 리프 노드가 n번 정점이란 것이 보장되지만, 모든 문제에서 성립하지 않음
+     */
+    int giga_pos = tree.size() - 1;
     int trunk_len = 0; //기둥의 길이
-    int giga_pos = tree.size() - 1; //기둥만 있는 경우
 
     //루트 노드가 기가 노드인 경우
     if (tree[node].empty() || tree[node].size() == 2)

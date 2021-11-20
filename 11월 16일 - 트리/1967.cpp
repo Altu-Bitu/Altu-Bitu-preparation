@@ -4,18 +4,14 @@
 using namespace std;
 typedef pair<int, int> ci;
 
-vector<bool> visited;
-
-ci dfs(int node, vector<vector<ci>> &graph) {
-    visited[node] = true;
-
+ci dfs(int node, int parent, vector<vector<ci>> &graph) {
     int pos = node, len = 0; //지름을 구성하는 노드 중 하나, 그 노드까지의 거리
     for (int i = 0; i < graph[node].size(); i++) {
         int next_node = graph[node][i].first;
-        if (visited[next_node])
+        if (next_node == parent)
             continue;
 
-        ci dfs_search = dfs(next_node, graph); //자식 노드에 대해 dfs 탐색
+        ci dfs_search = dfs(next_node, node, graph); //자식 노드에 대해 dfs 탐색
         if (graph[node][i].second + dfs_search.first > len) { //기존 거리보다 길다면 갱신
             len = graph[node][i].second + dfs_search.first;
             pos = dfs_search.second;
@@ -44,11 +40,8 @@ int main() {
     }
 
     //연산
-    visited.assign(n + 1, false);
-    ci first_node = dfs(1, graph); //지름을 구성하는 노드 하나 찾기
-
-    visited.assign(n + 1, false);
-    ci second_node = dfs(first_node.second, graph); //지름을 구성하는 다른 노드 찾기
+    ci first_node = dfs(1, -1, graph); //지름을 구성하는 노드 하나 찾기
+    ci second_node = dfs(first_node.second, -1, graph); //지름을 구성하는 다른 노드 찾기
 
     //출력
     cout << second_node.first;
