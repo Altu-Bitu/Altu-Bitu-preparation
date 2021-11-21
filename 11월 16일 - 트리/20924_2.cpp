@@ -22,9 +22,9 @@ ci bfs(int n, int r, vector<vector<ci>> &tree) {
         q.pop();
 
         len = visited[node];
-        if (trunk_len != -1)
+        if (trunk_len != -1) //기둥의 길이가 존재한다면 -> 가장 긴 가지의 길이 갱신
             max_branch = max(max_branch, len);
-        else if (tree[node].size() > 2) {
+        else if (tree[node].size() > 2) { //기가 노드 발견 -> 기둥의 길이 저장
             trunk_len = len;
             len = 0;
         }
