@@ -33,6 +33,15 @@ void unionInput(int x, int y) {
     }
 }
 
+int cntTree(int n) {
+    int cnt = 0;
+    for (int i = 1; i <= n; i++) {
+        if (parent[i] < 0 && !cycle[i]) //루트 정점인데 사이클도 없을 때
+            cnt++;
+    }
+    return cnt;
+}
+
 void printResult(int num, int cnt) {
     cout << "Case " << num;
     if (cnt == 0)
@@ -61,11 +70,7 @@ int main() {
         }
 
         //연산
-        int tree_cnt = 0;
-        for (int i = 1; i <= n; i++) {
-            if (parent[i] < 0 && !cycle[i]) //루트 정점인데 사이클도 없을 때
-                tree_cnt++;
-        }
+        int tree_cnt = cntTree(n);
 
         //출력
         printResult(test_case, tree_cnt);
