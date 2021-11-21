@@ -25,6 +25,15 @@ void unionInput(int x, int y) {
         parent[xp] = yp;
 }
 
+int friendshipCost(int n) {
+    int sum = 0;
+    for (int i = 1; i <= n; i++) {
+        if (parent[i] < 0) //루트 정점이라면
+            sum += -parent[i];
+    }
+    return sum;
+}
+
 int main() {
     int n, m, k, v, w, cost;
 
@@ -42,11 +51,7 @@ int main() {
         unionInput(v, w);
     }
 
-    int ans = 0;
-    for (int i = 1; i <= n; i++) {
-        if (parent[i] < 0) //루트 정점이라면
-            ans += -parent[i];
-    }
+    int ans = friendshipCost(n);
 
     //출력
     if (ans <= k)
