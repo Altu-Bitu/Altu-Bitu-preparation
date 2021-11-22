@@ -46,14 +46,13 @@ int main() {
                 unionInput(i, j);
         }
     }
-    cin >> a;
+    cin >> a; //시작 정점
     while (--m) {
         cin >> b;
         if (findParent(a) != findParent(b)) { //서로 다른 집합이라면 -> 해당 경로 불가능
             cout << "NO";
             return 0;
         }
-        a = b;
     }
     cout << "YES";
 }
