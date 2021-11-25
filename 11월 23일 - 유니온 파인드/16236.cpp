@@ -44,6 +44,7 @@ pair<int, ci> nextPos(int n, int shark_size, ci &shark, vector<vector<int>> &boa
 
     if (list.empty()) //상어가 갈 수 있는 곳이 없음
         return {min_dist, {-1, -1}};
+
     sort(list.begin(), list.end(), [](const ci &p1, const ci &p2) { //정렬
         if (p1.first != p2.first)
             return p1.first < p2.first;
@@ -67,7 +68,6 @@ int simulation(int n, pair<int, int> &shark, vector<vector<int>> &board) {
 
         //상어 이동
         ci pos = result.second;
-        board[pos.first][pos.second] = 9;
         board[shark.first][shark.second] = 0;
         shark = pos;
     }
