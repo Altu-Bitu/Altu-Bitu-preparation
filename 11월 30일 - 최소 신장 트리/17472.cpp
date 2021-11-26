@@ -110,7 +110,7 @@ int kruskal(int v, priority_queue<tp, vector<tp>, greater<>> &pq) {
  * 1. DFS(BFS 가능)로 모든 섬을 탐색하며 구분 짓기 : markIsland, dfs 함수 (DFS & BFS 과제 4963번 : 섬의 개수 참고)
  * 2. 브루트포스로 두 섬에 대한 가능한 모든 다리 구하기 : findBridge, buildBridge 함수
  *    섬의 형태가 ㄷ 모양이라면 다리를 건설하다가 자기 자신과 닿을 수 있으므로 주의!
- * 3. 모든 다리들에 대해 MST 알고리즘을 수행하지만, MST를 만들 수 없는 경우가 있음 (16202번 : MST 게임 참고)
+ * 3. 모든 다리들에 대해 MST 알고리즘을 수행하지만, MST를 만들 수 없는 경우가 있음
  *
  * 풀이 : https://myunji.tistory.com/373
  * *그냥 리팩토링 전후 비교용으로 보세요!
