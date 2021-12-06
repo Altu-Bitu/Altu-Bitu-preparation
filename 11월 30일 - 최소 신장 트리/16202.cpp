@@ -32,9 +32,9 @@ bool unionInput(int x, int y) {
     return true;
 }
 
-int kruskal(int n, vector<tp> &edges) {
+int kruskal(int n, int idx, vector<tp> &edges) {
     int cnt = 0, sum = 0;
-    for (int i = 0; i < edges.size(); i++) {
+    for (int i = idx; i < edges.size(); i++) {
         if (cnt == n - 1) //n-1개의 간선을 모두 연결함
             break;
         int dist = get<0>(edges[i]);
@@ -42,10 +42,6 @@ int kruskal(int n, vector<tp> &edges) {
         int y = get<2>(edges[i]);
 
         if (unionInput(x, y)) {
-            if (cnt == 0) { //이번 mst에서 가중치가 가장 작은 간선 삭제
-                edges.erase(edges.begin() + i);
-                i--;
-            }
             cnt++;
             sum += dist;
         }
@@ -61,7 +57,8 @@ int kruskal(int n, vector<tp> &edges) {
  *    이는 오직 간선을 정렬하는 연산의 시간 복잡도!
  *    즉, 모든 간선을 한 번 정렬해서 저장해두면 이후 몇 번의 알고리즘을 수행하여도 연산 시간에 큰 영향이 없음
  * 2. 간선 재사용을 위해 우선순위 큐가 아닌 벡터에 저장하고 크루스칼 알고리즘 k번 실행
- * 3. 매번 크루스칼을 수행할 때마다 제일 먼저 추가한 간선을 제거함
+ * 3. 매번 크루스칼을 수행할 때마다 제일 먼저 추가한 간선을 제외함
+ *    -> 제외될 간선은 배열의 0번째 간선부터 1, 2, 3번째 간선으로 순차적 제외
  * 4. 만약 한 번 MST를 만들 수 없다는게 확인됐다면 이후에도 MST를 만들 수 없으므로 flag 변수로 불필요한 연산 절약
  */
 int main() {
@@ -73,16 +70,15 @@ int main() {
         cin >> x >> y;
         edges.emplace_back(i, x, y);
     }
-    sort(edges.begin(), edges.end()); //정렬
 
     bool flag = false;
-    while (k--) {
+    for (int i = 0; i < k; i++) {
         if (flag) { //더이상 mst를 만들 수 없음
             cout << 0 << ' ';
             continue;
         }
         parent.assign(n + 1, -1); //초기화
-        int ans = kruskal(n, edges);
+        int ans = kruskal(n, i, edges);
         if (ans == 0)
             flag = true;
         cout << ans << ' ';
