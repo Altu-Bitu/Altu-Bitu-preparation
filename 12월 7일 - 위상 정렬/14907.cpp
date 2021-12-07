@@ -7,64 +7,67 @@ const int SIZE = 26;
 
 //위상정렬 + DP
 int topologicalSort(vector<int> &days, vector<int> &indegree, vector<vector<int>> &graph) {
-    vector<int> result;
     queue<int> q;
     vector<int> dp(SIZE, 0); //현재 작업 하기까지 걸린 시간
     int ans = 0;
 
     for (int i = 0; i < SIZE; i++) {
         dp[i] = days[i]; //dp 배열 초기화
-        if (days[i] && !indegree[i]) //진입차수가 0이라면
+        if (days[i] && !indegree[i]) //존재하는 정점이고, 진입차수가 0이라면
             q.push(i);
     }
-
     while (!q.empty()) {
         int node = q.front();
         q.pop();
 
-        result.push_back(node); //현재 정점 순서에 삽입
-        ans = max(ans, dp[node]); //정답 갱신 (마지막 정점이 result의 마지막 정점이 아닐 수 있음)
+        ans = max(ans, dp[node]); //정답 갱신 (마지막 정점이 여러 개일 경우, 가장 긴 시간을 선택해야 하기 때문)
         for (int i = 0; i < graph[node].size(); i++) {
             int next_node = graph[node][i];
             indegree[next_node]--; //연결된 정점의 진입차수를 1씩 감소
             if (!indegree[next_node]) //연결된 정점의 진입차수가 0이 되었다면
                 q.push(next_node);
 
-            //다음 정점의 최소 시간 계산 -> 이어진 전 정점 중 가장 긴 시간의 정점을 선택
+            //다음 정점의 최소 시간 계산 -> 이어진 전 정점 중 가장 긴 작업 일수를 가진 정점을 선택
             dp[next_node] = max(dp[next_node], dp[node] + days[next_node]);
         }
     }
     return ans;
 }
 
+/**
+ * 입력은 EOF를 통해 받아야 함 (입력이 없을 때까지)
+ * 위상 정렬의 끝나는 정점이 여러 개일 경우, 가장 긴 시간을 선택해야 하기 때문에 정답을 항상 max처리 해주어야 함
+ *
+ * !주의! 입력으로 들어오는 그 전에 해야 할 작업은 0개일 수 있음. 즉 주어지지 않을 수 있음.
+ * -> 따라서, getline을 통해 한 번에 입력받은 후, 작업, 작업 일수, 이 전에 해야 할 작업으로 나눠서 저장
+ */
+
 int main() {
     vector<int> indegree(SIZE, 0);
     vector<vector<int>> graph(SIZE, vector<int>(0));
-    vector<int> days(SIZE, 0), check(SIZE, 0);
+    vector<int> days(SIZE, 0);
     string input;
 
     //입력
     while (getline(cin, input)) {
-        char work = input[0];
-        string temp = "", prev = "";
-        int day = 0;
+        int work = input[0] - 'A'; //작업 번호
+        string data[2] = {"", ""}; //작업 일수, 그 전에 해야 하는 작업
+        int index = 0;
         for (int i = 2; i < input.length(); i++) {
-            if (input[i] == ' ' && day == 0) {
-                day = stoi(temp);
-                temp = "";
+            if (input[i] == ' ') {
+                index = 1;
                 continue;
             }
-            temp += input[i];
+            data[index] += input[i];
         }
-        if (day)
-            prev = temp;
-        else
-            day = stoi(temp);
+        days[work] = stoi(data[0]); //해당 작업 일수
+        string prev = data[1]; //그 전에 해야 하는 작업
 
-        indegree[work - 'A'] = prev.length();
-        days[work - 'A'] = day;
+        indegree[work] = prev.length();
         for (int i = 0; i < prev.length(); i++)
-            graph[prev[i] - 'A'].push_back(work - 'A');
+            graph[prev[i] - 'A'].push_back(work);
     }
+
+    //연산 & 출력
     cout << topologicalSort(days, indegree, graph);
 }
