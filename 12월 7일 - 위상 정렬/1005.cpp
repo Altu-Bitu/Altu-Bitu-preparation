@@ -4,30 +4,14 @@
 
 using namespace std;
 
-int buildMinimum(int n, int end, vector<int> &delay, vector<int> &sequence, vector<vector<bool>> &graph) {
-    vector<int> dp(n + 1, 0); //현재 건물을 짓기까지 총 걸린 시간
-
-    for (int i = 0; i < n; i++) {
-        int max_time = 0;
-        for (int j = i - 1; j >= 0; j--) {
-            if (!graph[sequence[j]][sequence[i]]) //연결되어 있지 않다면
-                continue;
-
-            max_time = max(dp[j], max_time); //이어진 전 정점 중 걸린 시간이 가장 긴 건물을 선택 (최대한 동시에 짓는 경우를 고려)
-        }
-        dp[i] = max_time + delay[sequence[i]];
-
-        if (sequence[i] == end) //문제에서 주어진 건설해야 할 건물이라면
-            return dp[i];
-    }
-}
-
-//위상정렬
-vector<int> topological_sort(int n, vector<int> &indegree, vector<vector<bool>> &graph) {
+//위상정렬 + DP
+int topologicalSort(int n, int w, vector<int> &delay, vector<int> &indegree, vector<vector<int>> &graph) {
     vector<int> result;
     queue<int> q;
+    vector<int> dp(n + 1, 0); //현재 건물을 짓기까지 총 걸린 시간
 
     for (int i = 1; i <= n; i++) {
+        dp[i] = delay[i]; //dp 배열 초기화
         if (!indegree[i]) //진입차수가 0이라면
             q.push(i);
     }
@@ -37,16 +21,17 @@ vector<int> topological_sort(int n, vector<int> &indegree, vector<vector<bool>> 
         q.pop();
 
         result.push_back(node); //현재 정점 순서에 삽입
-        for (int i = 1; i <= n; i++) {
-            if (!graph[node][i]) //연결되어 있지 않다면
-                continue;
+        for (int i = 0; i < graph[node].size(); i++) {
+            int next_node = graph[node][i];
+            indegree[next_node]--; //연결된 정점의 진입차수를 1씩 감소
+            if (!indegree[next_node]) //연결된 정점의 진입차수가 0이 되었다면
+                q.push(next_node);
 
-            indegree[i]--; //연결된 정점의 진입차수를 1씩 감소
-            if (!indegree[i]) //연결된 정점의 진입차수가 0이 되었다면
-                q.push(i);
+            //다음 정점의 최소 시간 계산 -> 이어진 전 정점 중 가장 긴 시간의 건물을 선택
+            dp[next_node] = max(dp[next_node], dp[node] + delay[next_node]);
         }
     }
-    return result;
+    return dp[w];
 }
 
 int main() {
@@ -57,22 +42,19 @@ int main() {
     while (t--) {
         cin >> n >> k;
         vector<int> indegree(n + 1, 0); //진입차수
-        vector<vector<bool>> graph(n + 1, vector<bool>(n + 1, 0)); //그래프
+        vector<vector<int>> graph(n + 1, vector<int>(0)); //그래프
         vector<int> delay(n + 1, 0); //건설에 걸리는 시간
         for (int i = 1; i <= n; i++)
             cin >> delay[i];
         while (k--) {
             cin >> x >> y; //x -> y
             indegree[y]++;
-            graph[x][y] = true;
+            graph[x].push_back(y);
         }
         cin >> w; //승리하기 위해 건설해야 할 건물의 번호
 
-        //위상정렬한 결과
-        vector<int> sequence = topological_sort(n, indegree, graph);
-
-        //건설 완료하는데 드는 최소 시간 출력
-        cout << buildMinimum(n, w, delay, sequence, graph) << '\n';
+        //연산 & 출력
+        cout << topologicalSort(n, w, delay, indegree, graph) << '\n';
     }
     return 0;
 }

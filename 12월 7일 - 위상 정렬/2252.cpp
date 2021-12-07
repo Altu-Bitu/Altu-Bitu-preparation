@@ -5,7 +5,7 @@
 using namespace std;
 
 //위상정렬
-vector<int> topological_sort(int n, vector<int> &indegree, vector<vector<int>> &graph) {
+vector<int> topologicalSort(int n, vector<int> &indegree, vector<vector<int>> &graph) {
     vector<int> result;
     queue<int> q;
 
@@ -43,7 +43,7 @@ int main() {
     }
 
     //연산
-    vector<int> result = topological_sort(n, indegree, graph);
+    vector<int> result = topologicalSort(n, indegree, graph);
 
     //출력
     for (int i = 0; i < n; i++)
