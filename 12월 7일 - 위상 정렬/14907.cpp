@@ -5,6 +5,21 @@
 using namespace std;
 const int SIZE = 26;
 
+vector<string> splitInput(string input) { //입력 문자열 분리
+    vector<string> result; //작업 번호, 작업 일수, 전에 해야하는 작업 목록 순서로 저장
+    string tmp;
+    input += " "; //마지막 문자열 분리를 위해 공백 추가
+    for (int i = 0; i < input.length(); i++) {
+        if (input[i] == ' ') {
+            result.push_back(tmp);
+            tmp = "";
+            continue;
+        }
+        tmp += input[i];
+    }
+    return result;
+}
+
 //위상정렬 + DP
 int topologicalSort(vector<int> &days, vector<int> &indegree, vector<vector<int>> &graph) {
     queue<int> q;
@@ -50,19 +65,13 @@ int main() {
 
     //입력
     while (getline(cin, input)) {
-        int work = input[0] - 'A'; //작업 번호
-        string data[2] = {"", ""}; //작업 일수, 그 전에 해야 하는 작업
-        int index = 0;
-        for (int i = 2; i < input.length(); i++) {
-            if (input[i] == ' ') {
-                index = 1;
-                continue;
-            }
-            data[index] += input[i];
-        }
-        days[work] = stoi(data[0]); //해당 작업 일수
-        string prev = data[1]; //그 전에 해야 하는 작업
+        vector<string> list = splitInput(input);
+        int work = list[0][0] - 'A'; //작업 번호
+        days[work] = stoi(list[1]); //해당 작업 일수
+        if (list.size() == 2) //그 전에 해야 하는 작업이 없다면
+            continue;
 
+        string prev = list[2]; //그 전에 해야 하는 작업
         indegree[work] = prev.length();
         for (int i = 0; i < prev.length(); i++)
             graph[prev[i] - 'A'].push_back(work);

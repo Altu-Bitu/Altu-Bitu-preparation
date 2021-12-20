@@ -31,8 +31,8 @@ vector<int> topologicalSort(int n, vector<int> &indegree, vector<vector<int>> &g
 
 /**
  * 기본적인 위상 정렬 문제
- * 선후관계를 정의할 때, 현재 가수와 전의 모든 가수 사이에 관계를 정의해야 함을 주의
- * 순서를 정하는 것이 불가능한 경우는 모든 정점을 탐색하지 못한 경우
+ * 현재 가수와 바로 전 가수 사이의 선후관계를 정의
+ * 순서를 정하는 것이 불가능한 경우(위상정렬을 할 수 없는 경우)는 모든 정점을 탐색하지 못한 경우
  */
 
 int main() {
@@ -49,9 +49,8 @@ int main() {
             cin >> singer[i];
         //선후관계 정의
         for (int i = 1; i < cnt; i++) {
-            indegree[singer[i]] += i;
-            for (int j = i - 1; j >= 0; j--)
-                graph[singer[j]].push_back(singer[i]);
+            indegree[singer[i]]++;
+            graph[singer[i - 1]].push_back(singer[i]);
         }
     }
 
