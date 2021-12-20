@@ -55,17 +55,14 @@ int switchCandy(int n, int row, int col, char candy) {
  * 2. 각 열, 행이 모두 같은 사탕일 때 사탕의 개수가 갱신되지 않도록 주의 (ans 갱신을 line 18~21에서 하는 경우)
  */
 int main() {
-    string input;
     int n, max_candy = 0;
 
     //입력
     cin >> n;
     board.assign(n, vector<char>(n, ' '));
-    for (int i = 0; i < n; i++) {
-        cin >> input;
+    for (int i = 0; i < n; i++)
         for (int j = 0; j < n; j++)
-            board[i][j] = input[j];
-    }
+            cin >> board[i][j];
 
     //연산
     for (int i = 0; i < n; i++) {
