@@ -36,7 +36,7 @@ vector<int> topologicalSort(int n, vector<int> &indegree, vector<vector<int>> &g
  */
 
 int main() {
-    int n, m, cnt;
+    int n, m, cnt, prev, cur;
 
     //입력
     cin >> n >> m;
@@ -44,13 +44,12 @@ int main() {
     vector<vector<int>> graph(n + 1, vector<int>(0));
     while (m--) {
         cin >> cnt; //담당 가수의 수
-        vector<int> singer(cnt, 0);
-        for (int i = 0; i < cnt; i++)
-            cin >> singer[i];
-        //선후관계 정의
-        for (int i = 1; i < cnt; i++) {
-            indegree[singer[i]]++;
-            graph[singer[i - 1]].push_back(singer[i]);
+        cin >> prev; //처음 가수 입력
+        while (--cnt) { //선후관계 정의
+            cin >> cur;
+            indegree[cur]++;
+            graph[prev].push_back(cur);
+            prev = cur;
         }
     }
 
